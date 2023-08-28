@@ -179,7 +179,10 @@ export default function SignIn({ navigation }) {
             >
               <Text>Sign In</Text>
             </TouchableOpacity>
-            <Text>LoginScreen</Text>
+            <View>
+            <Text>Do not have an account?<TouchableOpacity onPress={()=>{navigation.navigate('SignUp')}}><Text>Sign Up</Text></TouchableOpacity></Text>
+            </View>
+            
           </View>
         </View>
       </ImageBackground>
