@@ -10,6 +10,7 @@ function MyTabs() {
     <Tab.Navigator screenOptions={{headerShown:false}}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Wallet" component={wallet} />
+      
     </Tab.Navigator>
   );
 }

@@ -21,10 +21,13 @@ export default function SignIn({ navigation }) {
   const [isFocusP, setFocusP] = useState(false);
   const [isRememberU, setisRememberU] = useState(false);
   console.log(isRememberU);
+
+
   const checkLoginU = async () => {
     userData = { username: userName, passwd: passwd };
     try {
       console.log("Đến đây oke");
+      ///Laayys api
       const res = await api.post("/login", userData);
       console.log(res.data);
 
@@ -138,6 +141,7 @@ export default function SignIn({ navigation }) {
                   borderBottomWidth: 1,
                   borderBottomColor: "gray",
                 }}
+                
                 onFocus={() => setFocusP(true)}
                 onBlur={() => setFocusP(false)}
                 placeholder="Input your password"
