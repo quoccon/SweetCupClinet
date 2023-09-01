@@ -12,7 +12,7 @@ function MyStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
         {/* <Stack.Screen name="SignIn" component={SignIn} /> */}
-        <Stack.Screen name="Home" component={BottomNav} />
+        <Stack.Screen name="HomeScreen" component={BottomNav} />
       
       <Stack.Screen name="SignUp" component={signUp} />
       <Stack.Screen name="ForgotPassword" component={forgotPassword} />
