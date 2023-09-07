@@ -3,16 +3,18 @@ import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Modal, Butto
 import api from '../../../api/axios'
 import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
-const ProductList = () => {
+const ProductList = ({navigation}) => {
   const [productData, setproductData] = useState([]);
   const [isDialogVisible, setisDialogVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [btnColor, setbtnColor] = useState('white');
-  const defaultColor = 'white';
+  const [btn1, setBtn1] = useState(false)
+  const [btn2, setBtn2] = useState(false)
   const [count, setCount] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
   const [cart, setCart] = useState([]);
+  // const navigation = useNavigation();
 
   const ListData = async () => {
     try {
@@ -40,20 +42,25 @@ const ProductList = () => {
     setisDialogVisible(false);
   };
 
-  const handleColorSize = () => {
-    if (btnColor === defaultColor) {
-      setbtnColor('yellow');
-    } else {
-      setbtnColor(defaultColor);
-    }
-  };
+  const handleButton1Press = () => {
+    setBtn1(!btn1);
+    setBtn2(false)
+  }
+  const handleButton2Press = () => {
+    setBtn2(!btn2);
+    setBtn1(false)
+  }
 
   const incrementCount = () => {
     setCount(count + 1);
   };
 
   const decrementCount = () => {
-    setCount(count - 1);
+    if (count > 0) {
+      setCount(count - 1);
+    }
+
+
   };
 
   const handleRefresh = () => {
@@ -64,15 +71,21 @@ const ProductList = () => {
     }, 2000);
   }
 
+
+
   const AddToCart = (productData) => {
     //Nếu sản phẩm đã tồn tại thì cập nhật số lượng 
     setCart(
-      cart.map((item) => 
-        item._id === productData._id ? {...item, quantity: item.quantity + 1} : item
+      cart.map((item) =>
+        item._id === productData._id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
-    
+
   }
+
+  const navigateToCart = () => {
+    navigation.navigate("Cart"); // Navigate to the "Cart" screen
+  };
 
   return (
     <View style={styles.container}>
@@ -87,7 +100,7 @@ const ProductList = () => {
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => showDialog(item)}>
             <View
-              style={{ marginTop: 10, flexDirection: "row", padding: 16 }}
+              style={{ flexDirection: "row", padding: 16,alignItems:'center' }}
             >
               <Image
                 source={{
@@ -99,11 +112,11 @@ const ProductList = () => {
               <View style={{ marginTop: 10, marginLeft: 10 }}>
                 <Text style={styles.titleName}>Name: {item.nameproduct}</Text>
                 <Text style={styles.titlePrice}>
-                  Price: {item.price} VNĐ
+                  Price: {item.price} vnđ
                 </Text>
-                <Text style={styles.titleDes}>
+                {/* <Text style={styles.titleDes}>
                   Description: {item.description}
-                </Text>
+                </Text> */}
               </View>
             </View>
           </TouchableOpacity>
@@ -116,18 +129,18 @@ const ProductList = () => {
           <View style={{ flex: 1 }}>
             <Image source={{ uri: "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600" }} style={{ width: '100%', height: '50%', borderRadius: 10 }} />
             <View style={{ marginTop: 10, marginLeft: 30 }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Name: {selectedProduct.nameproduct}</Text>
-              <Text style={{ fontSize: 16, color: "#ff0000", fontWeight: 'bold' }}>Price: {selectedProduct.price} VNĐ</Text>
-              <Text style={{ fontSize: 16 }}>Description: {selectedProduct.description}</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{selectedProduct.nameproduct}</Text>
+              <Text style={{ fontSize: 16, color: "#ff0000", fontWeight: 'bold' }}>{selectedProduct.price} vnđ</Text>
+              <Text style={{ fontSize: 16 }}>{selectedProduct.description}</Text>
             </View>
 
 
             <Text style={{ fontSize: 20, marginLeft: 30, marginTop: 30, fontWeight: '700' }}>Chọn size:</Text>
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity style={[styles.Size, { backgroundColor: btnColor }]} onPress={handleColorSize}>
+              <TouchableOpacity style={[styles.Size, { backgroundColor: btn1 ? 'white' : '#FF8C00' }]} onPress={handleButton1Press}>
                 <Text>M</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.Size, { backgroundColor: btnColor }]} onPress={handleColorSize}>
+              <TouchableOpacity style={[styles.Size, { backgroundColor: btn2 ? 'white' : '#FF8C00' }]} onPress={handleButton2Press}>
                 <Text>L</Text>
               </TouchableOpacity>
             </View>
@@ -145,13 +158,13 @@ const ProductList = () => {
 
 
               <TouchableOpacity style={styles.titleBtn}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10, color: 'white' }}>Mua ngay</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10, color: 'white' }}>Buy Now . {selectedProduct.price} vnđ</Text>
               </TouchableOpacity>
 
 
             </View>
             <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity style={styles.btnAddCart}>
+              <TouchableOpacity style={styles.btnAddCart} onPress={() =>{navigation.navigate('Cart')}} >
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Add to cart</Text>
               </TouchableOpacity>
             </View>

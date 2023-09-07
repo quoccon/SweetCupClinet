@@ -4,6 +4,7 @@ import SearchBar from '../component/Home/SearchBar'
 import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import ProductList from "../component/Home/ProductList";
+import Cart from '../component/Home/Cart';
 
 
 const WIDTH = Dimensions.get('window').width;
@@ -21,46 +22,49 @@ const HomeScreen = () => {
   const [imgActive, setImgActive] = useState(0);
 
 
-const onChange = (naviteEvent) => {
-  if(naviteEvent){
-    const slide = Math.ceil(
-      naviteEvent.contentOffset.x / naviteEvent.layoutMeasurement.width
-    );
-    if(slide != imgActive){
-      setImgActive(slide);
+  const onChange = (naviteEvent) => {
+    if (naviteEvent) {
+      const slide = Math.ceil(
+        naviteEvent.contentOffset.x / naviteEvent.layoutMeasurement.width
+      );
+      if (slide != imgActive) {
+        setImgActive(slide);
+      }
     }
   }
-}
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Header />
       </View>
       <View style={styles.wrap}>
-      <ScrollView
-        onScroll={({naviteEvent}) => onChange(naviteEvent)}
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        horizontal
-        style={styles.wrap}>
+        <ScrollView
+          onScroll={({ naviteEvent }) => onChange(naviteEvent)}
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          horizontal
+          style={styles.wrap}>
 
-        {images.map((e,index) => 
-          <ImageBackground
-            key={e}
-            resizeMode="stretch"
-            style={styles.image}
-            source={{uri: e}}
-          />
-        )}
+          {images.map((e, index) =>
+            <ImageBackground
+              key={e}
+              resizeMode="stretch"
+              style={styles.image}
+              source={{ uri: e }}
+            />
+          )}
 
         </ScrollView>
       </View>
-      <View style={{marginTop:20}}>
+      <View style={{ marginTop: 20 }}>
         <Category />
       </View>
-      <View style={{marginTop:20}}>
-        <ProductList />
+      <View>
+        <Cart/>
       </View>
+      {/* <View style={{marginTop:20}}>
+        <ProductList />
+      </View> */}
     </SafeAreaView>
   )
 
@@ -71,9 +75,9 @@ const styles = StyleSheet.create({
     // flex:1,
     backgroundColor: "#fff",
   },
-  wrap:{
-    width:WIDTH,
-    height:HEIGHT * 0.25,
+  wrap: {
+    width: WIDTH,
+    height: HEIGHT * 0.25,
   },
   image: {
     width: WIDTH,
