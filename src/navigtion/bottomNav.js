@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import wallet from '../mainScreens/wallet';
 import HomeScreen from '../mainScreens/HomeScreen'
 import User from '../mainScreens/User';
+import Cart from '../component/Home/Cart';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,14 +15,15 @@ function MyTabs() {
       <Tab.Screen name='Profile' component={User}/>
       
       
+      
     </Tab.Navigator>
   );
 }
 
-const bottomNav = () =>{
-    return(<NavigationContainer independent={true}>
-        <MyTabs>
-        </MyTabs>
-    </NavigationContainer>)
-}
-export default bottomNav;
+// const bottomNav = () =>{
+//     return(<NavigationContainer independent={true}>
+//         <MyTabs>
+//         </MyTabs>
+//     </NavigationContainer>)
+// }
+export default MyTabs;

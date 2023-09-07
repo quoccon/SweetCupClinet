@@ -1,10 +1,14 @@
 import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function User() {
+export default function User({navigation}) {
     const VerticalSeparator = () => {
         return <View style={styles.verticalSeparator} />;
+      };
+      const navigateToCart = () => {
+        navigation.navigate("Cart"); // Navigate to the "Cart" screen in BottomNav
       };
   return (
     <SafeAreaView>
@@ -17,6 +21,7 @@ export default function User() {
           
         }}
       >
+         <TouchableOpacity onPress={navigateToCart}><Text>TewsstDS</Text></TouchableOpacity>
         <Text
           style={{
             fontSize: 25,

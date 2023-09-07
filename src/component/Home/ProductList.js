@@ -4,8 +4,9 @@ import api from '../../../api/axios'
 import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import Cart from "./Cart";
 
-const ProductList = ({navigation}) => {
+const ProductList = () => {
   const [productData, setproductData] = useState([]);
   const [isDialogVisible, setisDialogVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -14,14 +15,16 @@ const ProductList = ({navigation}) => {
   const [count, setCount] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
   const [cart, setCart] = useState([]);
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const ListData = async () => {
     try {
       const res = await api.get('/product');
       console.log(res.data.product);
+      
       setproductData(res.data.product);
     } catch (error) {
+      console.log(error);
       if (error.response.status === 404) {
         console.error("Tài nguyên không tồn tại");
       } else {
@@ -30,7 +33,7 @@ const ProductList = ({navigation}) => {
     }
   }
 
-  useEffect(() => { ListData(); }, []);
+  useEffect(() => { ListData();  }, []);
 
   const showDialog = (product) => {
     setSelectedProduct(product);
@@ -71,7 +74,7 @@ const ProductList = ({navigation}) => {
     }, 2000);
   }
 
-
+  
 
   const AddToCart = (productData) => {
     //Nếu sản phẩm đã tồn tại thì cập nhật số lượng 
@@ -164,7 +167,7 @@ const ProductList = ({navigation}) => {
 
             </View>
             <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity style={styles.btnAddCart} onPress={() =>{navigation.navigate('Cart')}} >
+              <TouchableOpacity style={styles.btnAddCart} onPress={() =>{navigation.navigate("Cart")}} >
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Add to cart</Text>
               </TouchableOpacity>
             </View>
