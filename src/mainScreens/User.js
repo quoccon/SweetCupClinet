@@ -7,9 +7,7 @@ export default function User({navigation}) {
     const VerticalSeparator = () => {
         return <View style={styles.verticalSeparator} />;
       };
-      const navigateToCart = () => {
-        navigation.navigate("Cart"); // Navigate to the "Cart" screen in BottomNav
-      };
+      
   return (
     <SafeAreaView>
       <StatusBar />
@@ -21,7 +19,6 @@ export default function User({navigation}) {
           
         }}
       >
-         <TouchableOpacity onPress={navigateToCart}><Text>TewsstDS</Text></TouchableOpacity>
         <Text
           style={{
             fontSize: 25,
