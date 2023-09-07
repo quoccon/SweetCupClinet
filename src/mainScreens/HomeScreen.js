@@ -62,9 +62,9 @@ const HomeScreen = () => {
       <View>
         <Cart/>
       </View>
-      {/* <View style={{marginTop:20}}>
+      <View style={{marginTop:20}}>
         <ProductList />
-      </View> */}
+      </View>
     </SafeAreaView>
   )
 
