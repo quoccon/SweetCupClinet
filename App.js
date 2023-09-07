@@ -6,7 +6,7 @@ import Nav from './src/navigtion/screensNav';
 
 export default function App() {
   return (
-    <Nav/>
+    <Nav></Nav>
   );
 }
 
