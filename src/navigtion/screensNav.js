@@ -5,17 +5,19 @@ import SignIn from '../auth/signIn';
 import signUp from '../auth/signUp';
 import forgotPassword from '../auth/forgotPassword';
 import { NavigationContainer } from '@react-navigation/native';
+import SearchBar from '../component/Home/SearchBar';
 
 const Stack = createStackNavigator();
 
 function MyStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="SignIn" component={SignIn} />
+        {/* <Stack.Screen name="SignIn" component={SignIn} /> */}
         <Stack.Screen name="Home" component={BottomNav} />
       
       <Stack.Screen name="SignUp" component={signUp} />
       <Stack.Screen name="ForgotPassword" component={forgotPassword} />
+      <Stack.Screen name="Search" component={SearchBar} />
     </Stack.Navigator>
   );
 }
