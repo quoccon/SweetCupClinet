@@ -63,8 +63,8 @@ const HomeScreen = ({navigation}) => {
       </View>
       {/* <View>
         <Cart/>
-      </View> */}
-      <View style={{marginTop:20}}>
+      </View>
+      {/* <View style={{marginTop:20}}>
         <ProductList />
       </View>
     </SafeAreaView>
