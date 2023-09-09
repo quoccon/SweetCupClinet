@@ -26,7 +26,7 @@ const Header = () => {
                 <Ionicons name="search" size={24} color="black" style={{marginRight:10}} />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {navigation.navigate('Cart')}}>
                     <Ionicons name="cart-outline" size={24} color="black" style={{marginRight:10}}/>
                 </TouchableOpacity>
             </View>

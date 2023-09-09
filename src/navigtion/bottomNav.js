@@ -13,7 +13,7 @@ function MyTabs() {
        <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Wallet" component={wallet} />
       <Tab.Screen name='Profile' component={User}/>
-      
+   
       
       
     </Tab.Navigator>

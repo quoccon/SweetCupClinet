@@ -167,9 +167,10 @@ const ProductList = () => {
 
             </View>
             <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity style={styles.btnAddCart} onPress={() =>{navigation.navigate("Cart")}} >
+              <TouchableOpacity style={styles.btnAddCart} onPress={() => {navigation.navigate('Cart')}}>
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Add to cart</Text>
               </TouchableOpacity>
+
             </View>
           </View>
 

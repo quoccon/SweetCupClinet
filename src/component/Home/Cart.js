@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Text,Image,TouchableOpacity,FlatList ,StyleSheet} from "react-native";
+import { View, Text,Image,TouchableOpacity,FlatList ,StyleSheet, Button} from "react-native";
 
 const Cart = ({navigation}) => {
     return(
         <View style={styles.container}>
             <Text style={styles.titleCart}>Cart</Text>
+
+            <Button title="Back" onPress={() => {navigation.navigate("HomeScreen")}}/>
         </View>
     )
 }
