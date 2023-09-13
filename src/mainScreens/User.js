@@ -51,7 +51,7 @@ const sighOut = ()=>{
         </Text>
         <Image
           source={{
-            uri: "http://192.168.224.1:8080/templates/366358821_6383044251814042_1614599852169252652_n.jpg",
+            uri: auth.avata,
           }}
           style={{ width: 156, height: 156, borderRadius: 999 }}
         />
