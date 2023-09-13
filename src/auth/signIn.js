@@ -13,6 +13,9 @@ import api from "../../api/axios";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { login } from "../../api/redux";
+
 
 export default function SignIn({ navigation }) {
   const [userName, setuserName] = useState(" ");
@@ -20,6 +23,7 @@ export default function SignIn({ navigation }) {
   const [isFocusUname, setFocusUname] = useState(false);
   const [isFocusP, setFocusP] = useState(false);
   const [isRememberU, setisRememberU] = useState(false);
+  const dispatch = useDispatch();
   console.log(isRememberU);
 
 
@@ -33,13 +37,15 @@ export default function SignIn({ navigation }) {
 
       if (res.data.status === 0) {
         console.log("Đăng nhập thành công" + res.data.status);
+        dispatch(login(res.data))
         if (isRememberU) {
           AsyncStorage.setItem("userData", JSON.stringify(userData));
           console.log("Đã Lưu");
         } else {
           AsyncStorage.removeItem("userData");
         }
-        navigation.navigate("Home");
+        
+        navigation.navigate("HomeScreen");
       } else console.log(res.status);
     } catch (error) {
       console.log(error);

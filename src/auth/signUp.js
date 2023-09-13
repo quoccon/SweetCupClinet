@@ -13,6 +13,7 @@ import { TouchableOpacity } from "react-native";
 import api from "../../api/axios";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
 
 export default function signUp({ navigation }) {
   const [userName, setuserName] = useState("");
@@ -26,6 +27,9 @@ export default function signUp({ navigation }) {
   const [isFocusPhone, setFocusPhone] = useState(false);
   const [isFocusP, setFocusP] = useState(false);
   const [isFocusReP, setFocusReP] = useState(false);
+
+  
+
 
   const Register = async () => {
     if (

@@ -2,20 +2,21 @@ import React from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 const Header = () => {
 
     const navigation = useNavigation();
     // const handleImagePress = () => {
     //     navigation.navigate('Search');
     // }
-
+    const auth = useSelector((state) => state.auth);
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image source={require("../../../public/sweetcup.jpg")} style={styles.logo} />
-                <Text style={styles.text}>Hello, </Text>
+                <Text style={styles.text}>Hello, {auth.username} </Text>
             </View>
-
+        {console.log(auth)}
             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                 <TouchableOpacity>
                 <Ionicons name="notifications-outline" size={24} color="black" style={{marginRight:10}}/>

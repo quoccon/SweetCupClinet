@@ -59,17 +59,18 @@ const HomeScreen = () => {
       <View style={{ marginTop: 20 }}>
         <Category />
       </View>
+
       <View style={{marginTop:20}}>
         <ProductList /> 
       </View>
     </SafeAreaView>
-  )   
-
+  )
 }
+
 
 const styles = StyleSheet.create({
   container: {
-    // flex:1,
+    flex:1,
     backgroundColor: "#fff",
   },
   wrap: {
