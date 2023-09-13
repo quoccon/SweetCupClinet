@@ -16,12 +16,14 @@ const ProductList = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [cart, setCart] = useState([]);
   const navigation = useNavigation();
+  const [isHeart, setisHeart] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const ListData = async () => {
     try {
       const res = await api.get('/product');
       console.log(res.data.product);
-      
+
       setproductData(res.data.product);
     } catch (error) {
       console.log(error);
@@ -33,7 +35,7 @@ const ProductList = () => {
     }
   }
 
-  useEffect(() => { ListData();  }, []);
+  useEffect(() => { ListData(); console.log(productData); }, []);
 
   const showDialog = (product) => {
     setSelectedProduct(product);
@@ -74,15 +76,11 @@ const ProductList = () => {
     }, 2000);
   }
 
-  
+
 
   const AddToCart = (productData) => {
     //Nếu sản phẩm đã tồn tại thì cập nhật số lượng 
-    setCart(
-      cart.map((item) =>
-        item._id === productData._id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+    
 
   }
 
@@ -90,6 +88,15 @@ const ProductList = () => {
     navigation.navigate("Cart"); // Navigate to the "Cart" screen
   };
 
+  const handleHeart = () => {
+    setisHeart(!isHeart);
+  }
+
+  
+
+  // const caculateTotal = (price,count) => {
+  //   const total =
+  // }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Product</Text>
@@ -103,12 +110,12 @@ const ProductList = () => {
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => showDialog(item)}>
             <View
-              style={{ flexDirection: "row", padding: 16,alignItems:'center' }}
+              style={{ flexDirection: "row", padding: 16, alignItems: 'center' }}
             >
               <Image
                 source={{
                   uri:
-                    "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
+                   item.image
                 }}
                 style={{ width: 100, height: 100, borderRadius: 10 }}
               />
@@ -117,9 +124,7 @@ const ProductList = () => {
                 <Text style={styles.titlePrice}>
                   Price: {item.price} vnđ
                 </Text>
-                {/* <Text style={styles.titleDes}>
-                  Description: {item.description}
-                </Text> */}
+
               </View>
             </View>
           </TouchableOpacity>
@@ -131,13 +136,20 @@ const ProductList = () => {
           <Ionicons name="close-circle-outline" size={24} color="black" onPress={closeDialog} />
           <View style={{ flex: 1 }}>
             <Image source={{ uri: "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600" }} style={{ width: '100%', height: '50%', borderRadius: 10 }} />
-            <View style={{ marginTop: 10, marginLeft: 30 }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{selectedProduct.nameproduct}</Text>
-              <Text style={{ fontSize: 16, color: "#ff0000", fontWeight: 'bold' }}>{selectedProduct.price} vnđ</Text>
-              <Text style={{ fontSize: 16 }}>{selectedProduct.description}</Text>
+            <View style={{ marginTop: 10, marginLeft: 30, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginRight: 60 }}>
+              <View>
+                <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{selectedProduct.nameproduct}</Text>
+                <Text style={{ fontSize: 20, color: "#ff0000", fontWeight: 'bold' }}>{selectedProduct.price} vnđ</Text>
+                <Text style={{ fontSize: 16 }}>{selectedProduct.description}</Text>
+              </View>
+              {/* <View style={{alignItems:'center'}}>
+                <Ionicons name="heart" size={40} color={isHeart ? 'black' : '#DC143C'} onPress={handleHeart} />
+                <Text onPress={handleHeart} style={{color: isHeart ? 'black' : 'DC143C'}}>Yêu thích</Text>
+                </View> */}
             </View>
 
 
+ 
             <Text style={{ fontSize: 20, marginLeft: 30, marginTop: 30, fontWeight: '700' }}>Chọn size:</Text>
             <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity style={[styles.Size, { backgroundColor: btn1 ? 'white' : '#FF8C00' }]} onPress={handleButton1Press}>
@@ -161,15 +173,16 @@ const ProductList = () => {
 
 
               <TouchableOpacity style={styles.titleBtn}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10, color: 'white' }}>Buy Now . {selectedProduct.price} vnđ</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10, color: 'white' }}>Buy Now . {selectedProduct.total} vnđ</Text>
               </TouchableOpacity>
 
 
             </View>
             <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity style={styles.btnAddCart} onPress={() =>{navigation.navigate("Cart")}} >
+              <TouchableOpacity style={styles.btnAddCart} onPress={() => { navigation.navigate('Cart') }}>
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Add to cart</Text>
               </TouchableOpacity>
+
             </View>
           </View>
 

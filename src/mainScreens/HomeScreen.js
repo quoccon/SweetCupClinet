@@ -5,7 +5,6 @@ import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import ProductList from "../component/Home/ProductList";
 import Cart from '../component/Home/Cart';
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 const WIDTH = Dimensions.get('window').width;
@@ -19,7 +18,7 @@ const images = [
 
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   const [imgActive, setImgActive] = useState(0);
 
 
@@ -39,7 +38,6 @@ const HomeScreen = ({navigation}) => {
         <Header />
       </View>
       <View style={styles.wrap}>
-        <TouchableOpacity onPress={() =>{navigation.navigate("Cart")}}></TouchableOpacity>
         <ScrollView
           onScroll={({ naviteEvent }) => onChange(naviteEvent)}
           showsHorizontalScrollIndicator={false}
@@ -61,16 +59,14 @@ const HomeScreen = ({navigation}) => {
       <View style={{ marginTop: 20 }}>
         <Category />
       </View>
-      {/* <View>
-        <Cart/>
-      </View> */}
+
       <View style={{marginTop:20}}>
-        <ProductList />
+        <ProductList /> 
       </View>
     </SafeAreaView>
   )
-
 }
+
 
 const styles = StyleSheet.create({
   container: {
