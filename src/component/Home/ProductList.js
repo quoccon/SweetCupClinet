@@ -18,6 +18,7 @@ const ProductList = () => {
   const navigation = useNavigation();
   const [isHeart, setisHeart] = useState(false);
   const [total, setTotal] = useState(0);
+  const [isSize, setisSize] = useState(0);
 
   const ListData = async () => {
     try {
@@ -48,10 +49,12 @@ const ProductList = () => {
   };
 
   const handleButton1Press = () => {
+    setisSize(0);
     setBtn1(!btn1);
     setBtn2(false)
   }
   const handleButton2Press = () => {
+    setisSize(5000);
     setBtn2(!btn2);
     setBtn1(false)
   }
@@ -78,6 +81,7 @@ const ProductList = () => {
 
 
 
+
   const AddToCart = (productData) => {
     //Nếu sản phẩm đã tồn tại thì cập nhật số lượng 
     
@@ -92,11 +96,13 @@ const ProductList = () => {
     setisHeart(!isHeart);
   }
 
-  
 
-  // const caculateTotal = (price,count) => {
-  //   const total =
-  // }
+  const caculateTotal = (price,count) => {
+    setTotal(price * count + isSize);
+  }
+
+  console.log(total);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Product</Text>
@@ -135,7 +141,7 @@ const ProductList = () => {
         <Modal visible={isDialogVisible} animationType="slide">
           <Ionicons name="close-circle-outline" size={24} color="black" onPress={closeDialog} />
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600" }} style={{ width: '100%', height: '50%', borderRadius: 10 }} />
+            <Image source={{ uri: selectedProduct.image}} style={{ width: '100%', height: '50%', borderRadius: 10 }} />
             <View style={{ marginTop: 10, marginLeft: 30, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginRight: 60 }}>
               <View>
                 <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{selectedProduct.nameproduct}</Text>
@@ -173,13 +179,13 @@ const ProductList = () => {
 
 
               <TouchableOpacity style={styles.titleBtn}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10, color: 'white' }}>Buy Now . {selectedProduct.total} vnđ</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10, color: 'white' }} onPress={()=>{setTotal(selectedProduct.price * count + isSize)}} >Buy Now . {selectedProduct.price * count + isSize} vnđ</Text>
               </TouchableOpacity>
 
 
             </View>
             <View style={{ alignItems: 'center' }}>
-              <TouchableOpacity style={styles.btnAddCart} onPress={() => { navigation.navigate('Cart') }}>
+              <TouchableOpacity style={styles.btnAddCart} onPress={()=>{setTotal(selectedProduct.price * count + isSize)}}>
                 <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Add to cart</Text>
               </TouchableOpacity>
 
