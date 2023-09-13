@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-    baseURL: "https://sweetcup.onrender.com/api",
+    baseURL: "https://sweetcup.store/api",
     
 })
 
