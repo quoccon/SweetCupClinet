@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
-export default function Wallet() {
+export default function Wallet({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -21,7 +21,7 @@ export default function Wallet() {
       </View>
       <View style={styles.balance}>
         <View>
-          <Text style={styles.textBalance}>Balance </Text>
+          <Text style={styles.textBalance}>Balance</Text>
         </View>
 
         <View
@@ -48,6 +48,7 @@ export default function Wallet() {
               borderRadius: 10,
               marginTop: 60,
             }}
+            onPress={()=> {navigation.navigate('Recharge')}}
           >
             <Text style={{ color: "white", fontSize: 20, fontWeight: "600" }}>
               Recharge

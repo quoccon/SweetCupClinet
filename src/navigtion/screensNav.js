@@ -7,6 +7,7 @@ import ForgotPassword from "../auth/forgotPassword";
 import { NavigationContainer } from "@react-navigation/native";
 import SearchBar from "../component/Home/SearchBar";
 import Cart from "../component/Home/Cart";
+import Recharge from "../component/Wallet/Recharge";
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ function MyStack() {
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="Search" component={SearchBar} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="Recharge" component={Recharge}/>
     </Stack.Navigator>
   );
 }
