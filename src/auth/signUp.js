@@ -15,7 +15,7 @@ import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 
-export default function signUp({ navigation }) {
+export default function SignUp({ navigation }) {
   const [userName, setuserName] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
@@ -88,7 +88,7 @@ export default function signUp({ navigation }) {
               <Text
                 style={{
                   height: 59,
-                  fontFamily: "Poppins",
+                  
                   fontSize: 39,
                   fontWeight: 700,
                   fontStyle: "normal",

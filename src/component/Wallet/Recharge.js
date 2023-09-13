@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function ForgotPassword() {
+export default function Recharge() {
   return (
     <View>
-      <Text>forgotPassword</Text>
+      <Text>Recharge</Text>
     </View>
   )
 }
