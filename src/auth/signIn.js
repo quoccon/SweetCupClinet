@@ -1,194 +1,123 @@
+import React, { useEffect, useState } from "react";
 import {
-  ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  Switch,
+  View,
   Text,
   TextInput,
-  View,
+  ImageBackground,
+  Switch,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+  Image,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
-import api from "../../api/axios";
-import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { login } from "../../api/redux";
-
+import api from "../../api/axios";
 
 export default function SignIn({ navigation }) {
-  const [userName, setuserName] = useState(" ");
-  const [passwd, setpasswd] = useState(" ");
-  const [isFocusUname, setFocusUname] = useState(false);
-  const [isFocusP, setFocusP] = useState(false);
-  const [isRememberU, setisRememberU] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [isFocusUname, setIsFocusUname] = useState(false);
+  const [isFocusP, setIsFocusP] = useState(false);
+  const [isRememberU, setIsRememberU] = useState(false);
   const dispatch = useDispatch();
-  console.log(isRememberU);
-
-
-  const checkLoginU = async () => {
-    userData = { username: userName, passwd: passwd };
-    try {
-      console.log("Đến đây oke");
-      ///Laayys api
-      const res = await api.post("/login", userData);
-      console.log(res.data);
-
-      if (res.data.status === 0) {
-        console.log("Đăng nhập thành công" + res.data.status);
-        dispatch(login(res.data))
-        if (isRememberU) {
-          AsyncStorage.setItem("userData", JSON.stringify(userData));
-          console.log("Đã Lưu");
-        } else {
-          AsyncStorage.removeItem("userData");
-        }
-        
-        navigation.navigate("HomeScreen");
-      } else console.log(res.status);
-    } catch (error) {
-      console.log(error);
-      console.log("lõi");
-    }
-  };
 
   useEffect(() => {
     AsyncStorage.getItem("userData").then((data) => {
       if (data) {
         const parsedData = JSON.parse(data);
-        setuserName(parsedData.username);
-        setpasswd(parsedData.passwd);
-        setisRememberU(true);
+        setUserName(parsedData.username);
+        setPassword(parsedData.passwd);
+        setIsRememberU(true);
       }
     });
   }, []);
 
+  const checkLogin = async () => {
+    const userData = { username: userName, passwd: password };
+    try {
+      const response = await api.post("/login", userData);
+
+      if (response.data.status === 0) {
+        dispatch(login(response.data));
+        if (isRememberU) {
+          AsyncStorage.setItem("userData", JSON.stringify(userData));
+        } else {
+          AsyncStorage.removeItem("userData");
+        }
+        navigation.navigate("HomeScreen");
+      } else {
+        console.log("Đăng nhập không thành công: " + response.data.status);
+      }
+    } catch (error) {
+      console.log("Lỗi khi đăng nhập:", error);
+    }
+  };
+
   return (
-    <SafeAreaView style={{}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
         source={{
           uri: "https://i.pinimg.com/564x/cf/68/1c/cf681ca08b130a55f3346c466b7e512b.jpg",
         }}
+        style={{ flex: 1 }}
       >
-        <View style={{ marginTop: 180 }}></View>
-
-        <View style={{ borderRadius: 20, backgroundColor: "white" }}>
-          <View
-            style={{
-              paddingLeft: 15,
-              paddingRight: 15,
-              marginTop: 100,
-              height: "100%",
-            }}
-          >
-            <View style={{ alignItems: "center" }}>
-              <Text
-                style={{
-                  width: 133,
-                  height: 59,
-                  
-                  fontSize: 39,
-                  fontWeight: 700,
-                  fontStyle: "normal",
-                  lineHeight: 39,
-                  color: "black",
-                }}
-              >
-                Sign In
-              </Text>
-            </View>
-            <View style={{ marginTop: 65 }}>
-              <View style={{ flexDirection: "row" }}>
-                {isFocusUname ? (
-                  <Ionicons
-                    name="person-circle-sharp"
-                    size={24}
-                    color="black"
-                  />
-                ) : (
-                  <Ionicons
-                    name="person-circle-outline"
-                    size={24}
-                    color="black"
-                  />
-                )}
-                <Text style={{ fontSize: 18, marginLeft: 5 }}>User Name</Text>
-              </View>
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Sign In</Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <View style={styles.inputWrapper}>
+              {isFocusUname ? (
+                <Ionicons name="person-circle-sharp" size={24} color="black" />
+              ) : (
+                <Ionicons name="person-circle-outline" size={24} color="black" />
+              )}
+              <Text style={styles.inputLabel}>User Name</Text>
               <TextInput
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: "gray",
-
-                  marginTop: 10,
-                }}
-                onFocus={() => setFocusUname(true)}
-                onBlur={() => setFocusUname(false)}
+                style={styles.input}
+                onFocus={() => setIsFocusUname(true)}
+                onBlur={() => setIsFocusUname(false)}
                 placeholder="Input your username"
-                onChangeText={(username) => {
-                  setuserName(username);
-                }}
-              >
-                {userName}
-              </TextInput>
+                value={userName}
+                onChangeText={(username) => setUserName(username)}
+              />
             </View>
-            <View style={{ marginTop: 10 }}>
-              <View style={{ flexDirection: "row" }}>
-                {isFocusP ? (
-                  <Ionicons name="key-sharp" size={24} color="black" />
-                ) : (
-                  <Ionicons name="key-outline" size={24} color="black" />
-                )}
-                <Text style={{ fontSize: 18, marginLeft: 5 }}>Password</Text>
-              </View>
+            <View style={styles.inputWrapper}>
+              {isFocusP ? (
+                <Ionicons name="key-sharp" size={24} color="black" />
+              ) : (
+                <Ionicons name="key-outline" size={24} color="black" />
+              )}
+              <Text style={styles.inputLabel}>Password</Text>
               <TextInput
-                style={{
-                  marginTop: 10,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "gray",
-                }}
-                
-                onFocus={() => setFocusP(true)}
-                onBlur={() => setFocusP(false)}
+                style={styles.input}
+                onFocus={() => setIsFocusP(true)}
+                onBlur={() => setIsFocusP(false)}
                 placeholder="Input your password"
-                onChangeText={(passwdd) => {
-                  setpasswd(passwdd);
-                }}
-              >
-                {passwd}
-              </TextInput>
+                value={password}
+                onChangeText={(passwd) => setPassword(passwd)}
+                secureTextEntry={true}
+              />
             </View>
-            <View
-              style={{
-                flexDirection: "row-reverse",
-                alignItems: "center",
-                marginTop: 10,
-              }}
-            >
-              <Switch value={isRememberU} onValueChange={setisRememberU} />
-              <Text style={{ marginRight: 10 }}>Remember me?</Text>
+            <View style={styles.rememberMeContainer}>
+              <Switch value={isRememberU} onValueChange={setIsRememberU} />
+              <Text style={styles.rememberMeText}>Remember me?</Text>
             </View>
             <TouchableOpacity
-              style={{
-                height: 40,
-                backgroundColor: "#C0C0C0",
-                marginLeft: 70,
-                marginRight: 70,
-                borderRadius: 15,
-                justifyContent: "center",
-                marginTop: 20,
-                alignItems: "center",
-              }}
-              onPress={() => {
-                checkLoginU();
-              }}
+              style={styles.signInButton}
+              onPress={() => checkLogin()}
             >
-              <Text>Sign In</Text>
+              <Text style={styles.signInText}>Sign In</Text>
             </TouchableOpacity>
-            <View>
-            <Text>Do not have an account?<TouchableOpacity onPress={()=>{navigation.navigate('SignUp')}}><Text>Sign Up</Text></TouchableOpacity></Text>
-            </View>
-            
+            <Text style={styles.signUpText}>
+              Don't have an account?{" "}
+              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                <Text style={styles.signUpLink}>Sign Up</Text>
+              </TouchableOpacity>
+            </Text>
           </View>
         </View>
       </ImageBackground>
@@ -196,4 +125,70 @@ export default function SignIn({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "transparent",
+    paddingHorizontal: 15,
+  },
+  titleContainer: {
+    alignItems: "center",
+    marginTop: 100,
+  },
+  title: {
+    fontSize: 39,
+    fontWeight: "700",
+    color: "white",
+  },
+  inputContainer: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginTop: 65,
+    paddingHorizontal: 15,
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
+    marginTop: 20,
+  },
+  inputLabel: {
+    fontSize: 18,
+    marginLeft: 5,
+  },
+  input: {
+    flex: 1,
+    fontSize: 18,
+    marginLeft: 10,
+  },
+  rememberMeContainer: {
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  rememberMeText: {
+    marginRight: 10,
+  },
+  signInButton: {
+    height: 40,
+    backgroundColor: "#C0C0C0",
+    borderRadius: 15,
+    justifyContent: "center",
+    marginTop: 20,
+    alignItems: "center",
+  },
+  signInText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  signUpText: {
+    textAlign: "center",
+    marginTop: 10,
+    color: "gray",
+    marginBottom: 10
+  },
+  signUpLink: {
+    color: "#FF045F",
+  },
+});
