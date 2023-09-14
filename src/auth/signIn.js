@@ -87,7 +87,7 @@ export default function SignIn({ navigation }) {
                 style={{
                   width: 133,
                   height: 59,
-                  fontFamily: "Poppins",
+                  
                   fontSize: 39,
                   fontWeight: 700,
                   fontStyle: "normal",

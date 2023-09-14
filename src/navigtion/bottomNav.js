@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import wallet from '../mainScreens/wallet';
+import Wallet from '../mainScreens/wallet';
 import HomeScreen from '../mainScreens/HomeScreen'
 import User from '../mainScreens/User';
 import Cart from '../component/Home/Cart';
@@ -25,7 +25,7 @@ function MyTabs() {
       
     })}>
        <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Wallet" component={wallet} />
+      <Tab.Screen name="Wallet" component={Wallet} />
       <Tab.Screen name='Profile' component={User}/>
    
       

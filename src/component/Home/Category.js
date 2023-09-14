@@ -14,11 +14,11 @@ const Category = () => {
 
             <View style={{marginTop:10, flexDirection:'row'}}>
                 <TouchableOpacity style={styles.catPro} onPress={handelCat}>
-                <Text>Coffee</Text>
+                <Text style={{fontSize:20,fontWeight:'600'}}>Coffee</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.catPro}>
-                <Text>Food</Text>
+                <Text style={{fontSize:20,fontWeight:'600'}}>Food</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -28,10 +28,10 @@ const Category = () => {
 const styles = StyleSheet.create({
    
     catPro:{
-        width:60,
-        height:30,
+        width:100,
+        height:40,
         marginLeft:20,
-        borderWidth:1,
+        borderWidth:1.5,
         borderRadius:20,
         alignItems:'center',
         justifyContent:'center'

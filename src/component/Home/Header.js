@@ -19,16 +19,16 @@ const Header = () => {
         {console.log(auth)}
             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                 <TouchableOpacity>
-                <Ionicons name="notifications-outline" size={24} color="black" style={{marginRight:10}}/>
+                <Ionicons name="notifications-outline" size={30} color="black" style={{marginRight:10}}/>
                 </TouchableOpacity>
 
 
                 <TouchableOpacity>
-                <Ionicons name="search" size={24} color="black" style={{marginRight:10}} />
+                <Ionicons name="search" size={30} color="black" style={{marginRight:10}} />
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => {navigation.navigate('Cart')}}>
-                    <Ionicons name="cart-outline" size={24} color="black" style={{marginRight:10}}/>
+                    <Ionicons name="cart-outline" size={30} color="black" style={{marginRight:10}}/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     logo: {
-        width: 50,
-        height: 50,
+        width: 70,
+        height: 70,
         borderRadius: 50
     },
     image: {
@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     text: {
-        marginLeft: 10
+        marginLeft: 10,
+        fontSize:20,
+        fontWeight:'700'
     }
 })
 
