@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SearchBar from "../component/Home/SearchBar";
 import Cart from "../component/Home/Cart";
 import Recharge from "../component/Wallet/Recharge";
+import MyInfo from "../component/User/MyInfo";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,8 @@ function MyStack() {
       <Stack.Screen name="Search" component={SearchBar} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Recharge" component={Recharge}/>
+      <Stack.Screen name="MyInfo" component={MyInfo}/>
+
     </Stack.Navigator>
   );
 }

@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, SafeAreaView, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
 import { TouchableOpacity } from "react-native";
 
 export default function Wallet({ navigation }) {
   const [bill, setBill] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-
-  const fetchData = async () => {
+  const billData = async () => {
     try {
       // Simulate fetching data from an API (replace with your actual API call)
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated delay
       const data = [
-        { id: 1, date: '2023-09-14', content: 'Nội dung 1' },
-        { id: 2, date: '2023-09-15', content: 'Nội dung 2' },
-        { id: 3, date: '2023-09-15', content: 'Nội dung 3' },
+        { id: 1, date: "2023-09-14", content: "Nội dung 1" },
+        { id: 2, date: "2023-09-15", content: "Nội dung 2" },
+        { id: 3, date: "2023-09-15", content: "Nội dung 3" },
       ];
       setBill(data); // Cập nhật trạng thái Bill sau khi lấy dữ liệu
       setIsLoading(false);
@@ -25,10 +30,7 @@ export default function Wallet({ navigation }) {
   };
 
   useEffect(() => {
-    
-   
-
-    fetchData();
+    billData();
   }, []);
 
   const groupedInvoices = bill.reduce((acc, invoice) => {
@@ -63,7 +65,11 @@ export default function Wallet({ navigation }) {
         </View>
       </View>
       {isLoading ? (
-        <ActivityIndicator style={styles.loadingIndicator} size="large" color="#FF045F" />
+        <ActivityIndicator
+          style={styles.loadingIndicator}
+          size="large"
+          color="#FF045F"
+        />
       ) : (
         <FlatList
           data={Object.entries(groupedInvoices)}
@@ -72,11 +78,11 @@ export default function Wallet({ navigation }) {
             <View style={styles.invoiceContainer}>
               <Text style={styles.invoiceDate}>{item[0]}</Text>
               <View style={styles.invoicePrevContent}>
-              {item[1].map((invoice) => (
-                <Text key={invoice.id} style={styles.invoiceContent}>
-                  {invoice.content}
-                </Text>
-              ))}
+                {item[1].map((invoice) => (
+                  <Text key={invoice.id} style={styles.invoiceContent}>
+                    {invoice.content}
+                  </Text>
+                ))}
               </View>
             </View>
           )}
@@ -157,18 +163,17 @@ const styles = {
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
-    marginTop: 20
+    marginTop: 20,
   },
   invoiceDate: {
     fontSize: 20,
     fontWeight: "bold",
   },
   invoicePrevContent: {
-    marginTop: 10
+    marginTop: 10,
   },
   invoiceContent: {
     fontSize: 16,
     marginTop: 5,
-    
   },
 };

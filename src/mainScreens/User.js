@@ -36,7 +36,7 @@ export default function User({ navigation }) {
       </View>
 
       <ScrollView style={styles.menuContainer}>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity onPress={()=>navigation.navigate('MyInfo')} style={styles.menuItem}>
           <Ionicons name="person-circle-outline" size={45} color="black" />
           <Text style={styles.menuText}>My Information</Text>
         </TouchableOpacity>

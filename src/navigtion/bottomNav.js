@@ -17,7 +17,7 @@ function MyTabs() {
           iconName = focused ? "home" : "home-outline";
         } else if (route.name == "Wallet") {
           iconName = focused ? "ios-wallet" : "ios-wallet-outline";
-        } else if (route.name == "Profile") {
+        } else if (route.name == "User") {
           iconName = focused ? "person" : "person-outline";
         } 
         return <Ionicons name={iconName} size={size} color={color}></Ionicons>
@@ -26,7 +26,7 @@ function MyTabs() {
     })}>
        <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Wallet" component={Wallet} />
-      <Tab.Screen name='Profile' component={User}/>
+      <Tab.Screen name='User' component={User}/>
    
       
       
