@@ -101,6 +101,12 @@ const styles = {
     backgroundColor: "#FF045F",
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 5,
+    height: 80,
   },
   headerText: {
     color: "white",
