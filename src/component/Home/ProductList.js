@@ -139,7 +139,7 @@ const ProductList = () => {
 
       {selectedProduct && (
         <Modal visible={isDialogVisible} animationType="slide">
-          <Ionicons name="close-circle-outline" size={24} color="black" onPress={closeDialog} />
+          <Ionicons name="close-circle-outline" size={24} color="black" onPress={closeDialog} style={{marginLeft:10}} />
           <View style={{ flex: 1 }}>
             <Image source={{ uri: selectedProduct.image}} style={{ width: '100%', height: '50%', borderRadius: 10 }} />
             <View style={{ marginTop: 10, marginLeft: 30, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginRight: 60 }}>
@@ -148,10 +148,10 @@ const ProductList = () => {
                 <Text style={{ fontSize: 20, color: "#ff0000", fontWeight: 'bold' }}>{selectedProduct.price} vnđ</Text>
                 <Text style={{ fontSize: 16 }}>{selectedProduct.description}</Text>
               </View>
-              {/* <View style={{alignItems:'center'}}>
+              <View style={{alignItems:'center'}}>
                 <Ionicons name="heart" size={40} color={isHeart ? 'black' : '#DC143C'} onPress={handleHeart} />
-                <Text onPress={handleHeart} style={{color: isHeart ? 'black' : 'DC143C'}}>Yêu thích</Text>
-                </View> */}
+                <Text onPress={handleHeart} style={{color: isHeart ? 'black' : '#DC143C'}}>Yêu thích</Text>
+                </View>
             </View>
 
 

@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     logo: {
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         borderRadius: 50
     },
     image: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginLeft: 10,
-        fontSize:20,
+        fontSize:16,
         fontWeight:'700'
     }
 })
