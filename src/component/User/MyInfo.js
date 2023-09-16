@@ -6,7 +6,7 @@ import { TextInput } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function MyInfo({ navigation }) {
-  const auth = useSelector((state) => state.auth);
+const auth = useSelector((state) => state.auth);
 
   const UpdateInfoUser = () => {
     
@@ -14,12 +14,12 @@ export default function MyInfo({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.pop()}>
+<TouchableOpacity onPress={() => navigation.pop()}>
           <Ionicons name="arrow-back-sharp" size={44} color="white" />
         </TouchableOpacity>
-
+        
         <Text style={styles.headerText}>My Information</Text>
-        <TouchableOpacity>
+<TouchableOpacity>
           <Text style={styles.headerEditText}>Edit</Text>
         </TouchableOpacity>
       </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF045F",
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row",
+flexDirection: "row",
     paddingHorizontal: 20,
     justifyContent: "space-between",
     marginBottom: 15,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginVertical: 10,
   },
-  headerEditText: {
+headerEditText: {
     color: "white",
     fontSize: 20,
     fontWeight: "600",

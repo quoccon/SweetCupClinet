@@ -35,7 +35,7 @@ const HomeScreen = () => {
     }
   }
   return (
-    <Provider store={store}>
+    
       <SafeAreaView style={styles.container}>
       <View>
         <Header />
@@ -67,7 +67,7 @@ const HomeScreen = () => {
         <ProductList /> 
       </View>
     </SafeAreaView>
-    </Provider>
+    
   )
 }
 
