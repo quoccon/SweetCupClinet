@@ -6,7 +6,7 @@ import Category from "../component/Home/Category";
 import ProductList from "../component/Home/ProductList";
 import Cart from '../component/Home/Cart';
 import { Provider } from "react-redux";
-import store from "../component/Cart/store";
+
 
 
 const WIDTH = Dimensions.get('window').width;
