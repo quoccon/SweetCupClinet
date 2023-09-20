@@ -9,7 +9,8 @@ import SearchBar from "../component/Home/SearchBar";
 import Cart from "../component/Home/Cart";
 import Recharge from "../component/Wallet/Recharge";
 import MyInfo from "../component/User/MyInfo";
-import Adress from "../component/User/Address";
+import AdressMap from "../component/User/AddressMap";
+import Address from "../component/User/Address";
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,8 @@ function MyStack() {
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Recharge" component={Recharge}/>
       <Stack.Screen name="MyInfo" component={MyInfo}/>
-      <Stack.Screen name="Adress" component={Adress}/>
+      <Stack.Screen name = "Address" component={Address}/>
+      <Stack.Screen name="AdressMap" component={AdressMap}/>
 
     </Stack.Navigator>
   );
