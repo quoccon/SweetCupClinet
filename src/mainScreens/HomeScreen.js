@@ -5,10 +5,10 @@ import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import ProductList from "../component/Home/ProductList";
 import Cart from '../component/Home/Cart';
-
-
+<<<<<<< HEAD
+=======
 import { Provider } from "react-redux";
-
+>>>>>>> 916b10709ed535b8f77c9a2e876cd9ce8eed20ed
 
 
 

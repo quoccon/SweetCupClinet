@@ -1,87 +1,111 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native";
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { Ionicons } from "@expo/vector-icons";
-import MapView from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-// import {GOOGLE_MAPS_APIKEY} from "../../../api/KeyMap"
+import { FlatList } from 'react-native';
+import { ScrollView } from 'react-native';
+export default function Address({navigation}) {
 
-export default function Adress({ navigation }) {
-  const [state, setstate] = useState({
-    pickupCords: {
-      latitude: 21.0278,
-      longitude: 105.8342,
-      latitudeDelta: 0.04,
-      longitudeDelta: 0.05,
-    },
-    droplocationCords: {
-      latitude: 21.0297,
-      longitude: 105.8303,
-      latitudeDelta: 0.04,
-      longitudeDelta: 0.05,
-    },
-  });
+    var data = [
+        { id: '1',location: 'Nhà', adress: 'Item 1' },
+  { id: '2',location: 'Công ty', adress: 'Item 2' },
+  { id: '3',location: 'Nhà người yêu', adress: 'Item 3' },
+    ]
 
-  const { pickupCords, droplocationCords } = state;
-  const GOOGLE_MAPS_APIKEY = "AIzaSyAgA2IoqwJ0nkd_w9qmHcMoU7xDB8FwuOQ";
+
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+        <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.pop()}>
           <Ionicons name="arrow-back-sharp" size={44} color="white" />
         </TouchableOpacity>
 
         <Text style={styles.headerText}>Address</Text>
       </View>
-      <MapView style={styles.container} initialRegion={pickupCords}>
-        <MapViewDirections
-          origin={pickupCords}
-          destination={droplocationCords}
-          apikey={GOOGLE_MAPS_APIKEY}
-          strokeWidth={3}
-          strokeColor="hotpink"
-          optimizeWaypoints={true}
-          onReady={res => {
-            mapRef.current.fitToCoordinates(res.coordinates,{
-              edgePadding: { top: 100, right: 30, bottom: 300, left: 30 },
-            })
-          }}
-        />
-      </MapView>
+      <ScrollView style={styles.contentContainer}>
+      <FlatList
+      data={data}
+      keyExtractor={(item,index)=>index.toString()} // Dữ liệu danh sách
+      renderItem={({item}) => {
+        return (
+            <View style={styles.Itemcontainer}>
+                <Text>{item.location}</Text>
+                <Text>{item.adress}</Text>
+            </View>
+        )
+      }} // Component để hiển thị từng phần tử
+      
+      />
+
+      </ScrollView>
+      <View style={styles.btnAddAdresContainer}>
+            <TouchableOpacity
+              onPress={() => UpdateInfoUser()}
+              style={styles.btnAddAdres}
+            >
+              <Text style={styles.btnAddAdresText}>Add New Address</Text>
+            </TouchableOpacity>
+          </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
-    backgroundColor: "#FF045F",
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+      },
+      header: {
+        backgroundColor: "#FF045F",
+    
+        alignItems: "center",
+        flexDirection: "row",
+        paddingHorizontal: 20,
+    
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 5,
+        height: 80,
+      },
+      headerText: {
+        color: "white",
+        fontSize: 25,
+        fontWeight: "600",
+        marginVertical: 10,
+      },
+      headerEditText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "600",
+        marginVertical: 10,
+      },
+      Itemcontainer: {
 
-    alignItems: "center",
-    flexDirection: "row",
-    paddingHorizontal: 20,
-
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 5,
-    height: 80,
-  },
-  headerText: {
-    color: "white",
-    fontSize: 25,
-    fontWeight: "600",
-    marginVertical: 10,
-  },
-  headerEditText: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "600",
-    marginVertical: 10,
-  },
-});
+      },
+      btnAddAdresContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 50,
+        
+      },
+      btnAddAdres: {
+        backgroundColor: "#FF045F",
+        width: 381,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: 50,
+        marginRight: 50,
+        marginBottom: 60
+      },
+      btnAddAdresText: {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "700",
+      },
+})

@@ -26,6 +26,8 @@ const ProductList = () => {
   const [isHeart, setIsHeart] = useState(false);
   const [total, setTotal] = useState(0);
   const [isSize, setIsSize] = useState(0);
+  
+  
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -93,6 +95,7 @@ const ProductList = () => {
   const AddItemToCart = () => {
     if (selectedProduct) {
       dispatch(addToCart(selectedProduct));
+
       console.log(cart);
     }
   };
@@ -271,9 +274,11 @@ const ProductList = () => {
               <TouchableOpacity
                 style={styles.btnAddCart}
                 onPress={() => {
-                  AddItemToCart(selectedProduct);
+                  var setaddlistcart = [selectedProduct,count,total]
+                  console.log(setaddlistcart , "smss");
+                  AddItemToCart(setaddlistcart);
                   closeDialog();
-                  navigation.navigate("Cart");
+                  // navigation.navigate("Cart");
                 }}
               >
                 <Text

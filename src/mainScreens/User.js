@@ -40,7 +40,7 @@ export default function User({ navigation }) {
           <Ionicons name="person-circle-outline" size={45} color="black" />
           <Text style={styles.menuText}>My Information</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=> navigation.navigate('Adress')} style={styles.menuItem}>
+        <TouchableOpacity onPress={()=> navigation.navigate('Address')} style={styles.menuItem}>
           <Ionicons name="map" size={45} color="black" />
           <Text style={styles.menuText}>Address</Text>
         </TouchableOpacity>
