@@ -1,88 +1,63 @@
-// import React, { useState, useEffect } from "react";
-// import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet, Button } from "react-native";
-// import api from "../../../api/axios";
-// import { Ionicons } from '@expo/vector-icons'
-// import { useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet, Button, ScrollView } from "react-native";
+import api from "../../../api/axios";
+import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-// const Cart = () => {
-//     const [dataCart, setdataCart] = useState([]);
-//     const navigation = useNavigation();
-//     const ListCart = async () => {
-//         try {
-//             const res = await api.get('/cart');
-//             console.log(res.data.cart);
-//             setdataCart(res.data.cart)
-//         } catch (error) {
-//             console.log(error);
-//             console.log("Loi");
-//         }
-//     }
+const Cart = () => {
+    const cart = useSelector((state) => state.cart)
+    console.log(cart);
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Cart</Text>
+            {cart.length === 0 ? (
+                <Text style={styles.title}>Cart is empty</Text>
+            ) : (
+                <FlatList
+                    data={cart}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                        <View
+                            style={{ flexDirection: "row", padding: 16, alignItems: "center" }}
+                        >
+                            <Image
+                                source={{
+                                    uri: item.image,
+                                }}
+                                style={{ width: 100, height: 100, borderRadius: 10 }}
+                            />
+                            <View style={{ marginTop: 10, marginLeft: 10 }}>
+                                <Text style={styles.cartItem}>Name: {item.nameproduct}</Text>
+                                <Text style={styles.cartItem}>Price: {item.total} vnđ</Text>
+                            </View>
+                        </View>
+                    )}
 
-//     useEffect(() => { ListCart(); console.log(dataCart); }, []);
+                />
+            )}
+        </View>
+    )
 
-//     return (
-//         <View style={styles.container}>
-//             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => { navigation.navigate("HomeScreen") }}>
-//                 <Ionicons name="chevron-back-outline" size={24} color="black" />
-//                 <Text>Back</Text>
-//             </TouchableOpacity>
+}
 
-//             <View style={{ alignItems: 'center' }}>
-//                 <Text style={styles.titleCart}>Cart</Text>
+const styles = StyleSheet.create({
+    container: {
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    title: {
+        color: "#ff0000",
+        fontSize: 20,
+        fontWeight: "700",
+    },
+    cartItem: {
+        borderWidth: 1,
+        borderColor: "#ccc",
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+    },
+});
 
-//                 <FlatList
-//                     data={dataCart}
-//                     keyExtractor={(item, index) => index.toString()}
-//                     renderItem={({ item }) => (
-//                         <TouchableOpacity>
-//                             <View style={styles.containerItem}>
-//                                 <Image
-//                                     source={{
-//                                         uri:
-//                                             "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
-//                                     }}
-//                                     style={{ width: 100, height: 100, borderRadius: 10 }}
-//                                 />
-//                                 <View>
-//                                     <Text style={styles.titleName}>{item.nameproduct}</Text>
-//                                     <Text>{item.quantity}</Text>
-//                                     <Text>{item.price}</Text>
-                                    
-//                                 </View>
-//                             </View>
-//                         </TouchableOpacity>
-//                     )}
-//                 />
-//             </View>
-//         </View>
-//     )
-
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         marginTop: 20
-//     },
-//     titleCart: {
-//         fontSize: 24,
-//         fontWeight: 'bold',
-
-//     },
-//     containerItem: {
-//         flexDirection: "row",
-//         padding: 16,
-//         alignItems: 'center',
-//         backgroundColor:'#ff0000'
-//     },
-//     titleName: {
-//         fontSize: 18,
-//         fontWeight: 'bold',
-//       },
-//       titlePrice: {
-//         color: '#ff0000',
-//         fontSize: 16,
-//         fontWeight: '700'
-//       },
-// });
-
-// export default Cart;
+export default Cart;
