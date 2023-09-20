@@ -1,80 +1,91 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView, // Thêm ScrollView
+} from "react-native";
 import { SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TextInput } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function MyInfo({ navigation }) {
-const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
 
-  const UpdateInfoUser = () => {
-    
-  }
+  const UpdateInfoUser = () => {};
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-<TouchableOpacity onPress={() => navigation.pop()}>
-          <Ionicons name="arrow-back-sharp" size={44} color="white" />
-        </TouchableOpacity>
-        
-        <Text style={styles.headerText}>My Information</Text>
-<TouchableOpacity>
-          <Text style={styles.headerEditText}>Edit</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.contentContainer}>
-        <View style={styles.myInfoConten}>
-          <View style={styles.myInfoContenItem}>
-            <Ionicons name="person" size={44} color="black" />
-            <Text style={styles.myInfoContenText}>Fullname</Text>
-          </View>
-          <TextInput style={styles.myInfoContenInputText}>
-            {auth.username}
-          </TextInput>
-        </View>
-        <View style={styles.myInfoConten}>
-          <View style={styles.myInfoContenItem}>
-            <Ionicons name="person" size={44} color="black" />
-            <Text style={styles.myInfoContenText}>Email</Text>
-          </View>
-          <TextInput style={styles.myInfoContenInputText}>
-            {auth.email}
-          </TextInput>
-        </View>
-        <View style={styles.myInfoConten}>
-          <View style={styles.myInfoContenItem}>
-            <Ionicons name="person" size={44} color="black" />
-            <Text style={styles.myInfoContenText}>Phone</Text>
-          </View>
-          <TextInput style={styles.myInfoContenInputText}>
-            {auth.phone}
-          </TextInput>
-        </View>
-        <View style={styles.myInfoConten}>
-          <View style={styles.myInfoContenItem}>
-            <Ionicons name="person" size={44} color="black" />
-            <Text style={styles.myInfoContenText}>Gender</Text>
-          </View>
-          <TextInput style={styles.myInfoContenInputText}>
-            {auth.gender}
-          </TextInput>
-        </View>
-        <View style={styles.myInfoConten}>
-          <View style={styles.myInfoContenItem}>
-            <Ionicons name="person" size={44} color="black" />
-            <Text style={styles.myInfoContenText}>Birthday</Text>
-          </View>
-          <TextInput style={styles.myInfoContenInputText}>
-            {auth.Birthday}
-          </TextInput>
-        </View>
-        <View style={styles.btnUpdateContainer}>
-          <TouchableOpacity onPress={()=>UpdateInfoUser()} style={styles.btnUpdate}>
-            <Text style={styles.btnUpdateText}>Update Info</Text>
+      
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.pop()}>
+            <Ionicons name="arrow-back-sharp" size={44} color="white" />
+          </TouchableOpacity>
+
+          <Text style={styles.headerText}>My Information</Text>
+          <TouchableOpacity>
+            <Text style={styles.headerEditText}>Edit</Text>
           </TouchableOpacity>
         </View>
-      </View>
+        <ScrollView>
+        <View style={styles.contentContainer}>
+          <View style={styles.myInfoConten}>
+            <View style={styles.myInfoContenItem}>
+              <Ionicons name="person" size={44} color="black" />
+              <Text style={styles.myInfoContenText}>Fullname</Text>
+            </View>
+            <TextInput style={styles.myInfoContenInputText}>
+              {auth.username}
+            </TextInput>
+          </View>
+          <View style={styles.myInfoConten}>
+            <View style={styles.myInfoContenItem}>
+              <Ionicons name="person" size={44} color="black" />
+              <Text style={styles.myInfoContenText}>Email</Text>
+            </View>
+            <TextInput style={styles.myInfoContenInputText}>
+              {auth.email}
+            </TextInput>
+          </View>
+          <View style={styles.myInfoConten}>
+            <View style={styles.myInfoContenItem}>
+              <Ionicons name="person" size={44} color="black" />
+              <Text style={styles.myInfoContenText}>Phone</Text>
+            </View>
+            <TextInput style={styles.myInfoContenInputText}>
+              {auth.phone}
+            </TextInput>
+          </View>
+          <View style={styles.myInfoConten}>
+            <View style={styles.myInfoContenItem}>
+              <Ionicons name="person" size={44} color="black" />
+              <Text style={styles.myInfoContenText}>Gender</Text>
+            </View>
+            <TextInput style={styles.myInfoContenInputText}>
+              {auth.gender}
+            </TextInput>
+          </View>
+          <View style={styles.myInfoConten}>
+            <View style={styles.myInfoContenItem}>
+              <Ionicons name="person" size={44} color="black" />
+              <Text style={styles.myInfoContenText}>Birthday</Text>
+            </View>
+            <TextInput style={styles.myInfoContenInputText}>
+              {auth.Birthday}
+            </TextInput>
+          </View>
+          <View style={styles.btnUpdateContainer}>
+            <TouchableOpacity
+              onPress={() => UpdateInfoUser()}
+              style={styles.btnUpdate}
+            >
+              <Text style={styles.btnUpdateText}>Update Info</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF045F",
     justifyContent: "center",
     alignItems: "center",
-flexDirection: "row",
+    flexDirection: "row",
     paddingHorizontal: 20,
     justifyContent: "space-between",
     marginBottom: 15,
@@ -105,7 +116,7 @@ flexDirection: "row",
     fontWeight: "600",
     marginVertical: 10,
   },
-headerEditText: {
+  headerEditText: {
     color: "white",
     fontSize: 20,
     fontWeight: "600",
@@ -140,6 +151,7 @@ headerEditText: {
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 50,
+    
   },
   btnUpdate: {
     backgroundColor: "#FF045F",
@@ -148,6 +160,8 @@ headerEditText: {
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 50,
+    marginRight: 50
   },
   btnUpdateText: {
     color: "#fff",
