@@ -94,9 +94,10 @@ const ProductList = () => {
 
   const AddItemToCart = () => {
     if (selectedProduct) {
-      dispatch(addToCart(selectedProduct));
-
-      console.log(cart);
+      const listdatacart = {...selectedProduct, count,total}
+      dispatch(addToCart(listdatacart));
+      
+      
     }
   };
 
@@ -274,9 +275,7 @@ const ProductList = () => {
               <TouchableOpacity
                 style={styles.btnAddCart}
                 onPress={() => {
-                  var setaddlistcart = [selectedProduct,count,total]
-                  console.log(setaddlistcart , "smss");
-                  AddItemToCart(setaddlistcart);
+                  AddItemToCart();
                   closeDialog();
                   // navigation.navigate("Cart");
                 }}
