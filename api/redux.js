@@ -44,7 +44,8 @@ export const cartSlice = createSlice({
       addToCart: (state, action) => {
           const itemInCart = state.cart.find((item) => item._id == action.payload._id);
           if(itemInCart) {
-            itemInCart.count = action.payload.count;            
+            itemInCart.count = action.payload.count;  
+            itemInCart.total = action.payload.total;          
           }else {
             state.cart.push({ ...action.payload, count: action.payload.count || 1 });
           }

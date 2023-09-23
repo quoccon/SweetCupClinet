@@ -59,17 +59,17 @@ const ProductList = () => {
   const closeDialog = () => {
     setSelectedProduct(null);
     setIsDialogVisible(false);
-    navigation.navigate("Cart")
+    
   };
 
   const handleButton1Press = () => {
-    setIsSize(0);
+    setIsSize(0 + "M");
     setBtn1(true);
     setBtn2(false);
   };
 
   const handleButton2Press = () => {
-    setIsSize(5000);
+    setIsSize(5000 + "L");
     setBtn2(true);
     setBtn1(false);
   };
@@ -94,7 +94,7 @@ const ProductList = () => {
 
   const AddItemToCart = () => {
     if (selectedProduct) {
-      const listdatacart = {...selectedProduct, count,total}
+      const listdatacart = {...selectedProduct, count,total,size:isSize};
       dispatch(addToCart(listdatacart));
       
       
@@ -277,7 +277,7 @@ const ProductList = () => {
                 onPress={() => {
                   AddItemToCart();
                   closeDialog();
-                  // navigation.navigate("Cart");
+                  navigation.navigate("Cart");
                 }}
               >
                 <Text

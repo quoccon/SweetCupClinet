@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TextInput, ScrollView, Dimensions, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TextInput, ScrollView, Dimensions, ImageBackground,TouchableOpacity } from "react-native";
 import SearchBar from '../component/Home/SearchBar'
 import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import ProductList from "../component/Home/ProductList";
 import Cart from '../component/Home/Cart';
 import { Provider } from "react-redux";
+import { Ionicons } from '@expo/vector-icons'; 
+
 
 
 
@@ -61,6 +63,14 @@ const HomeScreen = () => {
 
         </ScrollView>
       </View>
+
+      <View style={styles.searchContainer}>
+            <TextInput placeholder="Search here ..." style={styles.searchWrapper} />
+
+            <TouchableOpacity>
+              <Ionicons name="search" size={30} color="black" style={{paddingRight:20}} />
+            </TouchableOpacity>
+      </View>
       <View style={{ marginTop: 20 }}>
         <Category />
       </View>
@@ -82,11 +92,35 @@ const styles = StyleSheet.create({
   wrap: {
     width: WIDTH,
     height: HEIGHT * 0.25,
+    
   },
   image: {
     width: WIDTH,
     height: HEIGHT * 0.25,
   },
+  searchContainer: {
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft: 30,
+    marginRight:30,
+    borderRadius:15,
+    height:50,
+    marginTop:20,
+    backgroundColor:"lightgray",
+    
+  },
+  searchWrapper:{
+    flex:1,
+    width:'100%',
+    height:'100%',
+    backgroundColor:"lightgray",
+    paddingLeft:20,
+    borderRadius:15,
+    shadowRadius: 10,
+    shadowOpacity:0.1,
+    shadowColor: "#000",
+  }
 
 });
 

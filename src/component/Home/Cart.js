@@ -1,11 +1,17 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import React, {useState} from "react";
+import { View, Text, FlatList, StyleSheet, Image,SafeAreaView,TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
+import { Ionicons } from '@expo/vector-icons'; 
+import { useNavigation } from "@react-navigation/native";
 
 
 const Cart = () => {
+  const navigation = useNavigation();
   const carts = useSelector((state) => state.cart);
-  console.log(carts);
+  const [cartData, setcartData] = useState(carts.cart)
+  console.log(cartData, "hbdjshbjsdh");
+  console.log(carts.cart);
+  
   // Dữ liệu mẫu cứng
   // const cart = [
   //   {
@@ -25,11 +31,18 @@ const Cart = () => {
   //   // Thêm các mục khác nếu cần
   // ];
 
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Your Cart</Text>
+    <SafeAreaView style={styles.container}>
+      <View>
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+        <Text style={styles.title}>Your Cart</Text>
+      </View>
+      <Text>{carts.cart._id}</Text>
       <FlatList
-        data={carts}
+        data={cartData}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
@@ -42,7 +55,7 @@ const Cart = () => {
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -61,7 +74,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   itemContainer: {
-    backgroundColor: 'lightgray',
+    backgroundColor: '#ff0000',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
