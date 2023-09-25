@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native';
 export default function Address({navigation}) {
+
+  const [radioB,setradioB]= useState('')
 
     var data = [
         { id: '1',location: 'Nhà', adress: 'Item 1' },
@@ -31,8 +33,16 @@ export default function Address({navigation}) {
       renderItem={({item}) => {
         return (
             <View style={styles.Itemcontainer}>
-                <Text>{item.location}</Text>
-                <Text>{item.adress}</Text>
+              <TouchableOpacity onPress={()=>setradioB(item.id)}><View style={styles.radio}>
+                {radioB == item.id ? <View style={styles.radioBG}></View> : null}
+                  
+                </View></TouchableOpacity>
+                <View style={styles.wp_item}>
+                  <View><Text>{item.location}</Text>
+                <Text>{item.adress}</Text></View></View>
+                
+                
+                
             </View>
         )
       }} // Component để hiển thị từng phần tử
@@ -84,7 +94,20 @@ const styles = StyleSheet.create({
         marginVertical: 10,
       },
       Itemcontainer: {
-
+          backgroundColor: '#F2F2F2',
+          marginTop: 20,
+          paddingTop: 10,
+          paddingLeft: 10,
+          paddingBottom:20,
+          marginLeft: 15,
+          marginRight: 15,
+          borderRadius: 10,
+          borderWidth: 1,
+          flexDirection: "row",
+          alignItems: "center",
+      },
+      wp_item: {
+        marginLeft: 10
       },
       btnAddAdresContainer: {
         justifyContent: "center",
@@ -108,4 +131,21 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "700",
       },
+      radio: {
+        width: 25,
+        height: 25,
+        borderWidth: 1,
+        borderRadius: 99,
+        alignItems: "center",
+        justifyContent:"center"
+      },
+      radioBG: {
+        width: 15,
+        height: 15,
+        borderRadius: 20,
+        backgroundColor: 'black',
+       
+        
+      }
+      
 })
