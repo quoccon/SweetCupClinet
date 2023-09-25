@@ -11,6 +11,7 @@ import Recharge from "../component/Wallet/Recharge";
 import MyInfo from "../component/User/MyInfo";
 import AdressMap from "../component/User/AddressMap";
 import Address from "../component/User/Address";
+import Notification from "../mainScreens/Notification";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ function MyStack() {
       <Stack.Screen name="MyInfo" component={MyInfo}/>
       <Stack.Screen name = "Address" component={Address}/>
       <Stack.Screen name="AdressMap" component={AdressMap}/>
+      <Stack.Screen name="Notification" component={Notification}/>
 
     </Stack.Navigator>
   );

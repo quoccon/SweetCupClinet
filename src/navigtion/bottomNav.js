@@ -5,6 +5,7 @@ import HomeScreen from '../mainScreens/HomeScreen'
 import User from '../mainScreens/User';
 import Cart from '../component/Home/Cart';
 import { Ionicons } from '@expo/vector-icons';
+import Notification from '../mainScreens/Notification';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,15 +20,18 @@ function MyTabs() {
           iconName = focused ? "ios-wallet" : "ios-wallet-outline";
         } else if (route.name == "User") {
           iconName = focused ? "person" : "person-outline";
-        } 
+        } else if(route.name == "Notification") {
+          iconName = focused? "notifications-sharp" : "notifications-outline";
+        }
         return <Ionicons name={iconName} size={size} color={color}></Ionicons>
       },
       
     })}>
        <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Wallet" component={Wallet} />
+      <Tab.Screen name="Notification" component={Notification} />
       <Tab.Screen name='User' component={User}/>
-   
+     
       
       
     </Tab.Navigator>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -26,8 +25,11 @@ const ProductList = () => {
   const [isHeart, setIsHeart] = useState(false);
   const [total, setTotal] = useState(0);
   const [isSize, setIsSize] = useState(0);
-  
-  
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+  const [shortDescription, setShortDescription] = useState("");
+  const [descriptionButtonText, setDescriptionButtonText] = useState(
+    "Xem thêm"
+  );
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -54,22 +56,24 @@ const ProductList = () => {
   const showDialog = (product) => {
     setSelectedProduct(product);
     setIsDialogVisible(true);
+    setShortDescription(product.description.slice(0, 100));
+    setDescriptionButtonText("Xem thêm");
+    setDescriptionExpanded(false);
   };
 
   const closeDialog = () => {
     setSelectedProduct(null);
     setIsDialogVisible(false);
-    
   };
 
   const handleButton1Press = () => {
-    setIsSize(0 + "M");
+    setIsSize(0);
     setBtn1(true);
     setBtn2(false);
   };
 
   const handleButton2Press = () => {
-    setIsSize(5000 + "L");
+    setIsSize(5000);
     setBtn2(true);
     setBtn1(false);
   };
@@ -94,15 +98,24 @@ const ProductList = () => {
 
   const AddItemToCart = () => {
     if (selectedProduct) {
-      const listdatacart = {...selectedProduct, count,total,size:isSize};
+      const listdatacart = { ...selectedProduct, count, total };
       dispatch(addToCart(listdatacart));
-      
-      
     }
   };
 
   const handleHeart = () => {
     setIsHeart(!isHeart);
+  };
+
+  const toggleDescription = () => {
+    if (descriptionExpanded) {
+      setShortDescription(selectedProduct.description.slice(0, 100));
+      setDescriptionButtonText("Xem thêm");
+    } else {
+      setShortDescription(selectedProduct.description);
+      setDescriptionButtonText("Thu gọn");
+    }
+    setDescriptionExpanded(!descriptionExpanded);
   };
 
   useEffect(() => {
@@ -115,31 +128,22 @@ const ProductList = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Product</Text>
 
-      <FlatList
-        data={productData}
-        keyExtractor={(item, index) => index.toString()}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => showDialog(item)}>
-            <View
-              style={{ flexDirection: "row", padding: 16, alignItems: "center" }}
-            >
-              <Image
-                source={{
-                  uri: item.image,
-                }}
-                style={{ width: 100, height: 100, borderRadius: 10 }}
-              />
-              <View style={{ marginTop: 10, marginLeft: 10 }}>
-                <Text style={styles.titleName}>Name: {item.nameproduct}</Text>
-                <Text style={styles.titlePrice}>Price: {item.price} vnđ</Text>
-              </View>
+      {productData.map((item, index) => (
+        <TouchableOpacity key={index} onPress={() => showDialog(item)}>
+          <View style={{ flexDirection: "row", padding: 16, alignItems: "center" }}>
+            <Image
+              source={{
+                uri: item.image,
+              }}
+              style={{ width: 100, height: 100, borderRadius: 10 }}
+            />
+            <View style={{ marginTop: 10, marginLeft: 10 }}>
+              <Text style={styles.titleName}>Name: {item.nameproduct}</Text>
+              <Text style={styles.titlePrice}>Price: {item.price} vnđ</Text>
             </View>
-          </TouchableOpacity>
-        )}
-      />
+          </View>
+        </TouchableOpacity>
+      ))}
 
       {selectedProduct && (
         <Modal visible={isDialogVisible} animationType="slide">
@@ -166,38 +170,48 @@ const ProductList = () => {
               }}
             >
               <View>
-                <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-                  {selectedProduct.nameproduct}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: "#ff0000",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {selectedProduct.price} vnđ
-                </Text>
+                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                  <View>
+                  <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+                    {selectedProduct.nameproduct}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "#ff0000",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {selectedProduct.price} vnđ
+                  </Text>
+                  </View>
+
+                  <View>
+
+                    <Ionicons
+                      name="heart"
+                      size={40}
+                      color={isHeart ? "black" : "#DC143C"}
+                      onPress={handleHeart}
+                    />
+                  </View>
+                </View>
+
+
                 <Text style={{ fontSize: 16 }}>
-                  {selectedProduct.description}
+                  {shortDescription}
                 </Text>
+                <TouchableOpacity onPress={toggleDescription}>
+                  <Text style={{ color: "#007BFF" }}>
+                    {descriptionButtonText}
+                  </Text>
+                </TouchableOpacity>
+
+
               </View>
-              <View style={{ alignItems: "center" }}>
-                <Ionicons
-                  name="heart"
-                  size={40}
-                  color={isHeart ? "black" : "#DC143C"}
-                  onPress={handleHeart}
-                />
-                <Text
-                  onPress={handleHeart}
-                  style={{
-                    color: isHeart ? "black" : "#DC143C",
-                  }}
-                >
-                  Yêu thích
-                </Text>
-              </View>
+
+
+
             </View>
 
             <Text

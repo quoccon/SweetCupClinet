@@ -1,19 +1,12 @@
 import React from "react";
-import { View,TextInput,TouchableOpacity,StyleSheet } from "react-native";
+import { View,TextInput,TouchableOpacity,StyleSheet,Text, SafeAreaView } from "react-native";
 import Ionicons from '@expo/vector-icons' //sử dụng icon từ thư viện
 
-const SearchBar = ({onSearch}) => {
+const SearchBar = () => {
     return(
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                placeholder="Bạn muốn uống gì hôm nay..."
-                
-            />
-            {/* <TouchableOpacity>
-            <Ionicons name="search" size={24} color="white" />
-            </TouchableOpacity> */}
-        </View>
+        <SafeAreaView style={styles.container}>
+            <TextInput style={styles.input} placeholder="Nhập từ khóa tìm kiếm"/>
+        </SafeAreaView>
     )
 }
 
@@ -31,6 +24,10 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 10,
+        borderWidth:1,
+        borderRadius:10,
+        marginRight:20,
+        marginLeft:20
       },
       searchButton: {
         backgroundColor: 'blue',

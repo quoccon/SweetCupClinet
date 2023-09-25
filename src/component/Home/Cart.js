@@ -1,60 +1,94 @@
-import React, {useState} from "react";
-import { View, Text, FlatList, StyleSheet, Image,SafeAreaView,TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { useSelector } from "react-redux";
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-
 
 const Cart = () => {
   const navigation = useNavigation();
   const carts = useSelector((state) => state.cart);
-  const [cartData, setcartData] = useState(carts.cart)
-  console.log(cartData, "hbdjshbjsdh");
-  console.log(carts.cart);
-  
-  // Dữ liệu mẫu cứng
-  // const cart = [
-  //   {
-  //     id: 1,
-  //     image: "URL_HINH_ANH_1",
-  //     nameproduct: "Tên sản phẩm 1",
-  //     total: 100,
-  //     count: 2,
-  //   },
-  //   {
-  //     id: 2,
-  //     image: "URL_HINH_ANH_2",
-  //     nameproduct: "Tên sản phẩm 2",
-  //     total: 150,
-  //     count: 3,
-  //   },
-  //   // Thêm các mục khác nếu cần
-  // ];
+  const [cartData, setcartData] = useState(carts.cart);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [totalCost, setTotalCost] = useState(0);
 
+  const toggleItemSelection = (itemId) => {
+    // Check if the item is already selected, and toggle its selection
+    const updatedSelectedItems = selectedItems.includes(itemId)
+      ? selectedItems.filter((id) => id !== itemId)
+      : [...selectedItems, itemId];
+    setSelectedItems(updatedSelectedItems);
+
+    // Calculate the total cost based on selected items
+    const newTotalCost = cartData.reduce((total, item) => {
+      if (updatedSelectedItems.includes(item._id)) {
+        return total + item.total;
+      }
+      return total;
+    }, 0);
+    setTotalCost(newTotalCost);
+  };
+
+  useEffect(() => {
+    // Calculate the initial total cost when the component mounts
+    const initialTotalCost = cartData.reduce((total, item) => {
+      if (selectedItems.includes(item._id)) {
+        return total + item.total;
+      }
+      return total;
+    }, 0);
+    setTotalCost(initialTotalCost);
+  }, [cartData, selectedItems]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-      <Ionicons name="arrow-back" size={24} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
         <Text style={styles.title}>Your Cart</Text>
       </View>
-      <Text>{carts.cart._id}</Text>
       <FlatList
         data={cartData}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
+          <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => toggleItemSelection(item._id)}
+          >
+            <View style={styles.checkbox}>
+              {selectedItems.includes(item._id) && (
+                <Ionicons name="checkbox" size={24} color="black" />
+              )}
+            </View>
             <Image source={{ uri: item.image }} style={styles.image} />
             <View style={{ justifyContent: 'center', marginLeft: 10 }}>
               <Text>{item.nameproduct}</Text>
-              <Text>Total: {item.total}</Text>
+              <Text>Total: ${item.total.toFixed(2)}</Text>
               <Text>Count: {item.count}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
       />
+      {selectedItems.length > 0 && (
+        <Text>Tổng tiền: ${totalCost.toFixed(2)} </Text>
+      )}
+      <TouchableOpacity
+        style={styles.actionButton}
+        onPress={() => {
+          // Implement your action here (e.g., remove selected items)
+          console.log("Selected Items:", selectedItems);
+        }}
+      >
+        <Text style={{ color: "white" }}>Perform Action</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -74,17 +108,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   itemContainer: {
-    backgroundColor: '#ff0000',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
     flexDirection: "row",
+    alignItems: "center",
   },
   image: {
     width: 100,
     height: 100,
+    borderRadius: 10,
   },
-
+  checkbox: {
+    marginRight: 10,
+  },
+  actionButton: {
+    backgroundColor: "#ff0000",
+    borderRadius: 10,
+    padding: 10,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });
 
 export default Cart;
