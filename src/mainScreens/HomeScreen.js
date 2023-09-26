@@ -9,6 +9,7 @@ import {
   Dimensions,
   ImageBackground,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ProductList from "../component/Home/ProductList";
@@ -62,6 +63,7 @@ const HomeScreen = () => {
       <View>
         <Header />
       </View>
+      <ScrollView>
       <View style={styles.wrap}>
         <FlatList
           ref={flatListRef}
@@ -116,6 +118,7 @@ const HomeScreen = () => {
       <View style={{ marginTop: 20 }}>
         <ProductList />
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

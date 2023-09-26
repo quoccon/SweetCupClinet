@@ -8,6 +8,7 @@ import {
   Modal,
   RefreshControl,
   ScrollView,
+  StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -130,6 +131,8 @@ const ProductList = () => {
     scrollEventThrottle={1}>
       <Text style={styles.title}>Product</Text>
 
+      
+
       {productData.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => showDialog(item)}>
           <View style={{ flexDirection: "row", padding: 16, alignItems: "center" }}>
@@ -149,7 +152,7 @@ const ProductList = () => {
       ))}
 
       {selectedProduct && (
-        <Modal visible={isDialogVisible} animationType="slide">
+        <Modal visible={isDialogVisible} animationType="slide" style={{marginTop:10}}>
           <Ionicons
             name="close-circle-outline"
             size={24}
