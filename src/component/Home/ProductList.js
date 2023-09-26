@@ -152,13 +152,13 @@ const ProductList = () => {
       ))}
 
       {selectedProduct && (
-        <Modal visible={isDialogVisible} animationType="slide" style={{marginTop:10}}>
+        <Modal visible={isDialogVisible} animationType="slide" >
           <Ionicons
             name="close-circle-outline"
             size={24}
             color="black"
             onPress={closeDialog}
-            style={{ marginLeft: 10 }}
+            style={{ marginLeft: 10, marginTop:40 }}
           />
           <View style={{ flex: 1 }}>
             <Image
