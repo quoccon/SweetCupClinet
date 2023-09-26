@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   RefreshControl,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -125,7 +126,8 @@ const ProductList = () => {
   }, [selectedProduct, count, isSize]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}
+    scrollEventThrottle={1}>
       <Text style={styles.title}>Product</Text>
 
       {productData.map((item, index) => (
@@ -141,6 +143,7 @@ const ProductList = () => {
               <Text style={styles.titleName}>Name: {item.nameproduct}</Text>
               <Text style={styles.titlePrice}>Price: {item.price} vnđ</Text>
             </View>
+            
           </View>
         </TouchableOpacity>
       ))}
@@ -170,7 +173,7 @@ const ProductList = () => {
               }}
             >
               <View>
-                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                <View style={{ flexDirection:'row', justifyContent:'space-between' }}>
                   <View>
                   <Text style={{ fontSize: 24, fontWeight: "bold" }}>
                     {selectedProduct.nameproduct}
@@ -308,7 +311,7 @@ const ProductList = () => {
           </View>
         </Modal>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

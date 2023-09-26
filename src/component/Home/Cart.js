@@ -18,15 +18,14 @@ const Cart = () => {
   const [cartData, setcartData] = useState(carts.cart);
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
+  const [performActionColor, setPerformActionColor] = useState("lightgray");
 
   const toggleItemSelection = (itemId) => {
-    // Check if the item is already selected, and toggle its selection
     const updatedSelectedItems = selectedItems.includes(itemId)
       ? selectedItems.filter((id) => id !== itemId)
       : [...selectedItems, itemId];
     setSelectedItems(updatedSelectedItems);
 
-    // Calculate the total cost based on selected items
     const newTotalCost = cartData.reduce((total, item) => {
       if (updatedSelectedItems.includes(item._id)) {
         return total + item.total;
@@ -34,6 +33,13 @@ const Cart = () => {
       return total;
     }, 0);
     setTotalCost(newTotalCost);
+
+    // Cập nhật màu cho nút "Perform Action" dựa trên trạng thái của các mục đã chọn
+    if (updatedSelectedItems.length > 0) {
+      setPerformActionColor("#ff0000"); // Đổi thành màu đỏ nếu có ít nhất một mục đã chọn
+    } else {
+      setPerformActionColor("lightgray"); // Màu lightgray nếu không có mục nào đã chọn
+    }
   };
 
   useEffect(() => {
@@ -78,16 +84,16 @@ const Cart = () => {
         )}
       />
       {selectedItems.length > 0 && (
-        <Text>Tổng tiền: ${totalCost.toFixed(2)} </Text>
+        <Text>Tổng tiền: {totalCost +" vnđ"} </Text>
       )}
       <TouchableOpacity
-        style={styles.actionButton}
+        style={[styles.actionButton, { backgroundColor: performActionColor }]}
         onPress={() => {
-          // Implement your action here (e.g., remove selected items)
-          console.log("Selected Items:", selectedItems);
+          // Thực hiện hành động của bạn ở đây (ví dụ: xóa các mục đã chọn)
+          console.log("Các Mục Đã Chọn:", selectedItems);
         }}
       >
-        <Text style={{ color: "white" }}>Perform Action</Text>
+        <Text style={styles.actionButtonText}>Thanh toán</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -123,12 +129,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   actionButton: {
-    backgroundColor: "#ff0000",
+    backgroundColor: "lightgray",
     borderRadius: 10,
     padding: 10,
     alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
+  },
+  actionButtonText: {
+    color: "white",
   },
 });
 
