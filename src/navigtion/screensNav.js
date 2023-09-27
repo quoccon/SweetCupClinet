@@ -12,6 +12,7 @@ import MyInfo from "../component/User/MyInfo";
 import AdressMap from "../component/User/AddressMap";
 import Address from "../component/User/Address";
 import Notification from "../mainScreens/Notification";
+import Pay from "../component/Home/Pay";
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,7 @@ function MyStack() {
       <Stack.Screen name = "Address" component={Address}/>
       <Stack.Screen name="AdressMap" component={AdressMap}/>
       <Stack.Screen name="Notification" component={Notification}/>
-
+      <Stack.Screen name="Pay" component={Pay}/>
     </Stack.Navigator>
   );
 }

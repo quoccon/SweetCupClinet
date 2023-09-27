@@ -22,15 +22,15 @@ export const authSlice = createSlice({
       state.id = info_user._id;
       state.isLogin = true;
     },
-    logout: (state, action)=> {
-        state.username = "";
-        state.email = "";
-        state.password = "";
-        state.avata = "";
-        state.token = "";
-        state.id = "";
-        state.isLogin = false;
-      }
+    logout: (state, action) => {
+      state.username = "";
+      state.email = "";
+      state.password = "";
+      state.avata = "";
+      state.token = "";
+      state.id = "";
+      state.isLogin = false;
+    }
   },
 });
 
@@ -38,42 +38,55 @@ export const authSlice = createSlice({
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
-      cart:[],
+    cart: [],
   },
   reducers: {
-      addToCart: (state, action) => {
-          const itemInCart = state.cart.find((item) => item._id == action.payload._id);
-          if(itemInCart) {
-            itemInCart.count = action.payload.count;  
-            itemInCart.total = action.payload.total;          
-          }else {
-            state.cart.push({ ...action.payload, count: action.payload.count || 1 });
-          }
-      },
-      removeCart:(state,action) => {
-           const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
-           state.cart = removeFromCart;
+    addToCart: (state, action) => {
+      const itemInCartIndex = state.cart.findIndex((item) => item._id === action.payload._id);
+      console.log(itemInCartIndex);
+    
+      if (itemInCartIndex !== -1) {
+        const existingItem = state.cart[itemInCartIndex];
+        console.log(existingItem);
+    
+        if (existingItem.nameSize === action.payload.nameSize) {
+          existingItem.count += action.payload.count;
+          existingItem.total += action.payload.total;
+        } else {
+          // Thêm sản phẩm mới vào giỏ hàng
+          state.cart.push({ ...action.payload, count: action.payload.count || 1 ,total: action.payload.total,nameSize: action.payload.nameSize});
+        }
+      } else {
+        // Thêm sản phẩm mới vào giỏ hàng
+        state.cart.push({ ...action.payload, count: action.payload.count || 1 });
+      }
+    },
+    
+    
+    removeCart: (state, action) => {
+      const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
+      state.cart = removeFromCart;
 
-      },
-      incrementQuantity: (state, action) => {
-          const itemCart = state.cart.find((item) => item.id !== action.payload.id);
-          itemCart.count++;
-      },
-      decrementQuantity: (state, action) => {
-          const itemCart = state.cart.find((item) => item.id == action.payload.id);
-          if(itemCart.count == 1) {
-              const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
-           state.cart = removeFromCart;
-          }else{
-              itemCart.count--;
-          }
-      } 
+    },
+    incrementQuantity: (state, action) => {
+      const itemCart = state.cart.find((item) => item.id !== action.payload.id);
+      itemCart.count++;
+    },
+    decrementQuantity: (state, action) => {
+      const itemCart = state.cart.find((item) => item.id == action.payload.id);
+      if (itemCart.count == 1) {
+        const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
+        state.cart = removeFromCart;
+      } else {
+        itemCart.count--;
+      }
+    }
 
 
   }
 });
 
-export const {addToCart, removeFromCart,incrementQuantity,decrementQuantity} = cartSlice.actions;
+export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity } = cartSlice.actions;
 
 // export default cartSlice.reducer;
 

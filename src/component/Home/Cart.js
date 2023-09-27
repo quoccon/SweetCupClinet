@@ -79,6 +79,7 @@ const Cart = () => {
               <Text>{item.nameproduct}</Text>
               <Text>Total: ${item.total.toFixed(2)}</Text>
               <Text>Count: {item.count}</Text>
+              <Text>Size: {item.nameSize}</Text>
             </View>
           </TouchableOpacity>
         )}
