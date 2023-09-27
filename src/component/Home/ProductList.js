@@ -33,6 +33,7 @@ const ProductList = () => {
     "Xem thêm"
   );
   const [nameSize, setnameSize] = useState("");
+  const [keyy, setkeyy] = useState(""); 
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -102,8 +103,9 @@ const ProductList = () => {
   };
 
   const AddItemToCart = () => {
+    setkeyy(selectedProduct._id)
     if (selectedProduct) {
-      const listdatacart = { ...selectedProduct, count, total,nameSize };
+      const listdatacart = { ...selectedProduct, count, total,nameSize,keyy };
       dispatch(addToCart(listdatacart));
       setCount(1)
     }
