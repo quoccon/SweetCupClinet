@@ -42,7 +42,8 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const itemInCartIndex = state.cart.findIndex((item) => item._id === action.payload._id);
+      const itemKey = `${action.payload._id}-${action.payload.nameSize}`;
+      const itemInCartIndex = state.cart.findIndex((item) => item.key === itemKey);
       console.log(itemInCartIndex);
     
       if (itemInCartIndex !== -1) {
@@ -54,11 +55,11 @@ export const cartSlice = createSlice({
           existingItem.total += action.payload.total;
         } else {
           // Thêm sản phẩm mới vào giỏ hàng
-          state.cart.push({ ...action.payload, count: action.payload.count || 1 ,total: action.payload.total,nameSize: action.payload.nameSize});
+          state.cart.push({ ...action.payload, key: itemKey });
         }
       } else {
         // Thêm sản phẩm mới vào giỏ hàng
-        state.cart.push({ ...action.payload, count: action.payload.count || 1 });
+        state.cart.push({ ...action.payload, key: itemKey });
       }
     },
     
