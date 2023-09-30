@@ -41,27 +41,27 @@ export const cartSlice = createSlice({
     cart: [],
   },
   reducers: {
-    addToCart: (state, action) => {
-      const itemKey = `${action.payload._id}-${action.payload.nameSize}`;
-      const itemInCartIndex = state.cart.findIndex((item) => item.key === itemKey);
-      console.log(itemInCartIndex);
-    
-      if (itemInCartIndex !== -1) {
-        const existingItem = state.cart[itemInCartIndex];
-        console.log(existingItem);
-    
-        if (existingItem.nameSize === action.payload.nameSize) {
-          existingItem.count += action.payload.count;
-          existingItem.total += action.payload.total;
+      addToCart: (state, action) => {
+        const itemKey = `${action.payload._id}-${action.payload.nameSize}`;
+        const itemInCartIndex = state.cart.findIndex((item) => item.key === itemKey);
+        console.log(itemInCartIndex);
+      
+        if (itemInCartIndex !== -1) {
+          const existingItem = state.cart[itemInCartIndex];
+          console.log(existingItem);
+      
+          if (existingItem.nameSize === action.payload.nameSize) {
+            existingItem.count += action.payload.count;
+            existingItem.total += action.payload.total;
+          } else {
+            // Thêm sản phẩm mới vào giỏ hàng
+            state.cart.push({ ...action.payload, key: itemKey });
+          }
         } else {
           // Thêm sản phẩm mới vào giỏ hàng
           state.cart.push({ ...action.payload, key: itemKey });
         }
-      } else {
-        // Thêm sản phẩm mới vào giỏ hàng
-        state.cart.push({ ...action.payload, key: itemKey });
-      }
-    },
+      },
     
     
     removeCart: (state, action) => {
