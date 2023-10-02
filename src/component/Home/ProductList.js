@@ -33,6 +33,7 @@ const ProductList = () => {
     "Xem thêm"
   );
   const [nameSize, setnameSize] = useState("");
+  const [keyy, setkeyy] = useState(""); 
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -56,12 +57,24 @@ const ProductList = () => {
     ListData();
   }, []);
 
+  useEffect(() => {
+    setnameSize("M");
+    setIsSize(0);
+    setBtn1(true);
+    setBtn2(false);
+  },[]);
+
   const showDialog = (product) => {
     setSelectedProduct(product);
     setIsDialogVisible(true);
     setShortDescription(product.description.slice(0, 100));
     setDescriptionButtonText("Xem thêm");
     setDescriptionExpanded(false);
+    setnameSize("M");
+    setIsSize(0);
+    setBtn1(true);
+    setBtn2(false);
+    setCount(1);
   };
 
   const closeDialog = () => {
@@ -102,8 +115,9 @@ const ProductList = () => {
   };
 
   const AddItemToCart = () => {
+    setkeyy(selectedProduct._id)
     if (selectedProduct) {
-      const listdatacart = { ...selectedProduct, count, total,nameSize };
+      const listdatacart = { ...selectedProduct, count, total,nameSize,keyy };
       dispatch(addToCart(listdatacart));
       setCount(1)
     }
@@ -290,7 +304,7 @@ const ProductList = () => {
                     marginTop: 10,
                     color: "white",
                   }}
-                  onPress={() => navigation.navigate("Pay")}
+                  
                 >
                   Buy Now . {total} vnđ
                 </Text>

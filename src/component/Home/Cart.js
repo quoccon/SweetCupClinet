@@ -11,6 +11,8 @@ import {
 import { useSelector } from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { addToSelectedItems } from "../../../api/redux";
 
 const Cart = () => {
   const navigation = useNavigation();
@@ -19,6 +21,8 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [performActionColor, setPerformActionColor] = useState("lightgray");
+  const dispatch = useDispatch();
+  console.log(selectedItems);
 
   const toggleItemSelection = (itemId) => {
     const updatedSelectedItems = selectedItems.includes(itemId)
@@ -40,6 +44,9 @@ const Cart = () => {
     } else {
       setPerformActionColor("lightgray"); // Màu lightgray nếu không có mục nào đã chọn
     }
+
+    dispatch(addToSelectedItems(updatedSelectedItems));
+    console.log(updatedSelectedItems);
   };
 
   useEffect(() => {
@@ -75,7 +82,7 @@ const Cart = () => {
               )}
             </View>
             <Image source={{ uri: item.image }} style={styles.image} />
-            <View style={{ justifyContent: 'center', marginLeft: 10 }}>
+            <View key={selectedItems._id} style={{ justifyContent: 'center', marginLeft: 10 }}>
               <Text>{item.nameproduct}</Text>
               <Text>Total: ${item.total.toFixed(2)}</Text>
               <Text>Count: {item.count}</Text>
@@ -90,8 +97,9 @@ const Cart = () => {
       <TouchableOpacity
         style={[styles.actionButton, { backgroundColor: performActionColor }]}
         onPress={() => {
+          navigation.navigate("Pay",{selectedItems:cartData})
           // Thực hiện hành động của bạn ở đây (ví dụ: xóa các mục đã chọn)
-          console.log("Các Mục Đã Chọn:", selectedItems);
+          console.log("Các Mục Đã Chọn:" , selectedItems);
         }}
       >
         <Text style={styles.actionButtonText}>Thanh toán</Text>

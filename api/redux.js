@@ -30,10 +30,9 @@ export const authSlice = createSlice({
       state.token = "";
       state.id = "";
       state.isLogin = false;
-    }
+    },
   },
 });
-
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -41,33 +40,34 @@ export const cartSlice = createSlice({
     cart: [],
   },
   reducers: {
-      addToCart: (state, action) => {
-        const itemKey = `${action.payload._id}-${action.payload.nameSize}`;
-        const itemInCartIndex = state.cart.findIndex((item) => item.key === itemKey);
-        console.log(itemInCartIndex);
-      
-        if (itemInCartIndex !== -1) {
-          const existingItem = state.cart[itemInCartIndex];
-          console.log(existingItem);
-      
-          if (existingItem.nameSize === action.payload.nameSize) {
-            existingItem.count += action.payload.count;
-            existingItem.total += action.payload.total;
-          } else {
-            // Thêm sản phẩm mới vào giỏ hàng
-            state.cart.push({ ...action.payload, key: itemKey });
-          }
+    addToCart: (state, action) => {
+      const itemKey = `${action.payload._id}-${action.payload.nameSize}`;
+      const itemInCartIndex = state.cart.findIndex((item) => item.key === itemKey);
+    
+      if (itemInCartIndex !== -1) {
+        const existingItem = state.cart[itemInCartIndex];
+    
+        if (existingItem.nameSize === action.payload.nameSize) {
+          // Nếu đã có sản phẩm với cùng ID và nameSize trong giỏ hàng, cập nhật số lượng và tổng cộng.
+          existingItem.count += action.payload.count;
+          existingItem.total += action.payload.total;
         } else {
-          // Thêm sản phẩm mới vào giỏ hàng
+          // Nếu đã có sản phẩm với cùng ID nhưng khác nameSize, tạo một sản phẩm mới với nameSize mới.
           state.cart.push({ ...action.payload, key: itemKey });
         }
-      },
+      } else {
+        // Nếu không có sản phẩm nào với ID và nameSize tương tự, thêm sản phẩm mới vào giỏ hàng.
+        state.cart.push({ ...action.payload, key: itemKey });
+      }
+    },
+  
     
     
     removeCart: (state, action) => {
-      const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
+      const removeFromCart = state.cart.filter(
+        (item) => item._id !== action.payload._id
+      );
       state.cart = removeFromCart;
-
     },
     incrementQuantity: (state, action) => {
       const itemCart = state.cart.find((item) => item.id !== action.payload.id);
@@ -76,18 +76,39 @@ export const cartSlice = createSlice({
     decrementQuantity: (state, action) => {
       const itemCart = state.cart.find((item) => item.id == action.payload.id);
       if (itemCart.count == 1) {
-        const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
+        const removeFromCart = state.cart.filter(
+          (item) => item.id !== action.payload.id
+        );
         state.cart = removeFromCart;
       } else {
         itemCart.count--;
       }
-    }
-
-
-  }
+    },
+  },
 });
 
-export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity } = cartSlice.actions;
+export const PaySlice = createSlice({
+  name: 'pays',
+  initialState:{
+    pays:[],
+  },
+  reducers:{
+    addToSelectedItems: (state, action) => {
+      state.pays.push(action.payload);
+    },
+  }
+})
+
+export const {
+  addToCart,
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+} = cartSlice.actions;
+
+export const {
+  addToSelectedItems
+} = PaySlice.actions
 
 // export default cartSlice.reducer;
 
