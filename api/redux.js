@@ -9,6 +9,7 @@ export const authSlice = createSlice({
     avata: "",
     token: "",
     id: "",
+    balance: "",
     isLogin: false,
   },
   reducers: {
@@ -20,6 +21,7 @@ export const authSlice = createSlice({
       state.avata = info_user.avata;
       state.token = accessToken;
       state.id = info_user._id;
+      state.balance = info_user.balance
       state.isLogin = true;
     },
     logout: (state, action) => {

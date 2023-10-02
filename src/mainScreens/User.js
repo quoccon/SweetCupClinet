@@ -7,7 +7,7 @@ import { logout } from "../../api/redux";
 export default function User({ navigation }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
+  console.log(auth);
   const signOut = () => {
     dispatch(logout());
     navigation.navigate('SignIn');
@@ -27,7 +27,7 @@ export default function User({ navigation }) {
       <View style={styles.shadowInfo}>
         <View style={styles.balanceInfo}>
           <Text style={styles.balanceText}>Số Dư</Text>
-          <Text style={styles.balanceAmount}>0 VNĐ</Text>
+          <Text style={styles.balanceAmount}>{auth.balance} VNĐ</Text>
         </View>
         <TouchableOpacity style={styles.inviteButton}>
           <Ionicons name="person-add" size={40} color="black" />
