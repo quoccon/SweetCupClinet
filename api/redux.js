@@ -44,21 +44,30 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const itemKey = `${action.payload._id}-${action.payload.nameSize}`;
-      const itemInCart = state.cart.find((item) => item.key === itemKey);
-      console.log(itemInCart);
-      if (itemInCart) {
-        // Cập nhật số lượng và tổng tiền
-        itemInCart.count += action.payload.count;
-        itemInCart.total += action.payload.total;
+      const itemInCartIndex = state.cart.findIndex((item) => item.key === itemKey);
+    
+      if (itemInCartIndex !== -1) {
+        const existingItem = state.cart[itemInCartIndex];
+    
+        if (existingItem.nameSize === action.payload.nameSize) {
+          // Nếu đã có sản phẩm với cùng ID và nameSize trong giỏ hàng, cập nhật số lượng và tổng cộng.
+          existingItem.count += action.payload.count;
+          existingItem.total += action.payload.total;
+        } else {
+          // Nếu đã có sản phẩm với cùng ID nhưng khác nameSize, tạo một sản phẩm mới với nameSize mới.
+          state.cart.push({ ...action.payload, key: itemKey });
+        }
       } else {
-        // Thêm sản phẩm mới vào giỏ hàng
+        // Nếu không có sản phẩm nào với ID và nameSize tương tự, thêm sản phẩm mới vào giỏ hàng.
         state.cart.push({ ...action.payload, key: itemKey });
       }
     },
-
+  
+    
+    
     removeCart: (state, action) => {
       const removeFromCart = state.cart.filter(
-        (item) => item.id !== action.payload.id
+        (item) => item._id !== action.payload._id
       );
       state.cart = removeFromCart;
     },
@@ -80,12 +89,28 @@ export const cartSlice = createSlice({
   },
 });
 
+export const PaySlice = createSlice({
+  name: 'pays',
+  initialState:{
+    pays:[],
+  },
+  reducers:{
+    addToSelectedItems: (state, action) => {
+      state.pays.push(action.payload);
+    },
+  }
+})
+
 export const {
   addToCart,
   removeFromCart,
   incrementQuantity,
   decrementQuantity,
 } = cartSlice.actions;
+
+export const {
+  addToSelectedItems
+} = PaySlice.actions
 
 // export default cartSlice.reducer;
 

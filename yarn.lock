@@ -1832,6 +1832,11 @@
     "prompts" "^2.4.0"
     "semver" "^6.3.0"
 
+"@react-native-picker/picker@^2.5.1":
+  "integrity" "sha512-/sADUfQsosMRYtrqqL3ZYZSECRygj0fXtpRLqxJfwuMEoqfvfn40756R6B1alzusVvDRZFI0ari0iQid56hA/Q=="
+  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.5.1.tgz"
+  "version" "2.5.1"
+
 "@react-native/assets-registry@^0.72.0":
   "integrity" "sha512-Im93xRJuHHxb1wniGhBMsxLwcfzdYreSZVQGDoMJgkd6+Iky61LInGEHnQCTN0fKNYF1Dvcofb4uMmE1RQHXHQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.72.0.tgz"
@@ -5692,7 +5697,7 @@
   "resolved" "https://registry.npmjs.org/react-native-swipe-list-view/-/react-native-swipe-list-view-3.2.9.tgz"
   "version" "3.2.9"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.64.3", "react-native@>=0.23.1", "react-native@>=0.59", "react-native@0.72.3":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.64.3", "react-native@>=0.23.1", "react-native@>=0.57", "react-native@>=0.59", "react-native@0.72.3":
   "integrity" "sha512-QqISi+JVmCssNP2FlQ4MWhlc4O/I00MRE1/GClvyZ8h/6kdsyk/sOirkYdZqX3+DrJfI3q+OnyMnsyaXIQ/5tQ=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.72.3.tgz"
   "version" "0.72.3"
@@ -5759,7 +5764,7 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0 || ^18.0.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@>= 17.0.1", "react@>=0.14.8", "react@>=15.0.0", "react@>=16.8", "react@>=17.0.0", "react@18.2.0":
+"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@>= 17.0.1", "react@>=0.14.8", "react@>=15.0.0", "react@>=16", "react@>=16.8", "react@>=17.0.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

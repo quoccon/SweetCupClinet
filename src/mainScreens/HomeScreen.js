@@ -15,8 +15,12 @@ import { Ionicons } from "@expo/vector-icons";
 import ProductList from "../component/Home/ProductList";
 import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
+<<<<<<< HEAD
+import { RefreshControl } from "react-native";
+=======
 import { useSelector } from "react-redux";
 
+>>>>>>> 1601fdde3f0191f11b1f29afe52748e2915eadf2
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -32,6 +36,7 @@ const HomeScreen = () => {
   const auth = useSelector((state) => state.auth);
   const scrollInterval = 3000;
   const flatListRef = useRef(null);
+
 
   const onChange = (nativeEvent) => {
     if (nativeEvent) {
@@ -65,60 +70,60 @@ const HomeScreen = () => {
         <Header />
       </View>
       <ScrollView>
-      <View style={styles.wrap}>
-        <FlatList
-          ref={flatListRef}
-          data={images}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          onMomentumScrollEnd={({ nativeEvent }) => onChange(nativeEvent)}
-          renderItem={({ item }) => (
-            <ImageBackground
-              resizeMode="stretch"
-              style={styles.image}
-              source={{ uri: item }}
+        <View style={styles.wrap}>
+          <FlatList
+            ref={flatListRef}
+            data={images}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            onMomentumScrollEnd={({ nativeEvent }) => onChange(nativeEvent)}
+            renderItem={({ item }) => (
+              <ImageBackground
+                resizeMode="stretch"
+                style={styles.image}
+                source={{ uri: item }}
+              />
+            )}
+            onScrollBeginDrag={() => setAutoScrollEnabled(false)}
+            onScrollEndDrag={() => setAutoScrollEnabled(true)}
+          />
+        </View>
+
+        <View style={styles.dotContainer}>
+          {images.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                { backgroundColor: index === imgActive ? "#007BFF" : "lightgray" },
+              ]}
             />
-          )}
-          onScrollBeginDrag={() => setAutoScrollEnabled(false)}
-          onScrollEndDrag={() => setAutoScrollEnabled(true)}
-        />
-      </View>
+          ))}
+        </View>
 
-      <View style={styles.dotContainer}>
-        {images.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.dot,
-              { backgroundColor: index === imgActive ? "#007BFF" : "lightgray" },
-            ]}
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Search here ..."
+            style={styles.searchWrapper}
           />
-        ))}
-      </View>
 
-      <View style={styles.searchContainer}>
-        <TextInput
-          placeholder="Search here ..."
-          style={styles.searchWrapper}
-        />
+          <TouchableOpacity>
+            <Ionicons
+              name="search"
+              size={30}
+              color="black"
+              style={{ paddingRight: 20 }}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Category />
+        </View>
 
-        <TouchableOpacity>
-          <Ionicons
-            name="search"
-            size={30}
-            color="black"
-            style={{ paddingRight: 20 }}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Category />
-      </View>
-
-      <View style={{ marginTop: 20 }}>
-        <ProductList />
-      </View>
+        <View style={{ marginTop: 20 }}>
+          <ProductList />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

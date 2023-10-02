@@ -1,23 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from "react";
+import { View,Text } from "react-native";
 
-export default function Notification({ message}) {
+const Notification = ({route}) => {
+  const {message} = route.params;
+
+
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.message}>{message}</Text>
+    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+      <Text style={{fontSize:20,fontWeight:'bold',color:'green'}}>
+        {message}
+      </Text>
     </View>
-  )
+  );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "green", // Bạn có thể tùy chỉnh kiểu dáng ở đây
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  message: {
-    color: "black",
-    fontSize: 18,
-  },
-})
+
+export default Notification;
