@@ -13,6 +13,9 @@ import AdressMap from "../component/User/AddressMap";
 import Address from "../component/User/Address";
 import Notification from "../mainScreens/Notification";
 import Pay from "../component/Home/Pay";
+import AddBank from "../component/Wallet/AddBank";
+import DepositSuccessful from "../component/Wallet/DepositSuccessful";
+import DepositFailed from "../component/Wallet/DepositFailed";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +35,9 @@ function MyStack() {
       <Stack.Screen name="AdressMap" component={AdressMap}/>
       <Stack.Screen name="Notification" component={Notification}/>
       <Stack.Screen name="Pay" component={Pay}/>
+      <Stack.Screen name="AddBank" component={AddBank}/>
+      <Stack.Screen name="DepositSuccessful" component={DepositSuccessful}/>
+      <Stack.Screen name="DepositFailed" component={DepositFailed}/>
     </Stack.Navigator>
   );
 }

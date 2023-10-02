@@ -15,7 +15,12 @@ import { Ionicons } from "@expo/vector-icons";
 import ProductList from "../component/Home/ProductList";
 import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
+<<<<<<< HEAD
 import { RefreshControl } from "react-native";
+=======
+import { useSelector } from "react-redux";
+
+>>>>>>> 1601fdde3f0191f11b1f29afe52748e2915eadf2
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -28,7 +33,7 @@ const images = [
 const HomeScreen = () => {
   const [imgActive, setImgActive] = useState(0);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
-
+  const auth = useSelector((state) => state.auth);
   const scrollInterval = 3000;
   const flatListRef = useRef(null);
 
@@ -50,7 +55,7 @@ const HomeScreen = () => {
         flatListRef.current.scrollToIndex({
           index: (imgActive + 1) % images.length,
           animated: true,
-        });
+        }); 
       }, scrollInterval);
 
       return () => {

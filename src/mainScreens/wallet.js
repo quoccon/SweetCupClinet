@@ -7,10 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Wallet({ navigation }) {
   const [bill, setBill] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const auth = useSelector((state) => state.auth);
 
   const billData = async () => {
     try {
@@ -51,7 +53,7 @@ export default function Wallet({ navigation }) {
         <Text style={styles.balanceText}>Balance</Text>
         <View style={styles.balanceInfo}>
           <View style={styles.balanceDetails}>
-            <Text style={styles.balanceAmount}>$100</Text>
+            <Text style={styles.balanceAmount}>$ {auth.balance}</Text>
             <Text style={styles.balanceName}>Name</Text>
           </View>
           <TouchableOpacity
