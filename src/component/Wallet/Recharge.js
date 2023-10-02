@@ -31,8 +31,8 @@ export default function Recharge({ navigation }) {
     { id: "3", nameBack: "Techcomback", vat: "Free" ,imgBank: "https://inkythuatso.com/uploads/images/2021/09/logo-techcombank-inkythuatso-10-15-11-46.jpg"},
   ];
   const recharge = async () =>{
-    console.log(Monney);
-    const newBalance = {balance: Monney,_id: "651afaa67e83226069969641"}
+    console.log(Monney + auth.id);
+    const newBalance = {balance: Monney,_id: auth.id}
     try {
       console.log("Oke nè")
       const response = await api.post("/recharge",newBalance)
