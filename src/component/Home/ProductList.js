@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../../api/redux";
 import api from "../../../api/axios";
+import { addToSelectedItems } from "../../../api/redux";
 
 const ProductList = () => {
   const [productData, setProductData] = useState([]);
@@ -123,6 +124,13 @@ const ProductList = () => {
     }
   };
 
+  const BuyNow = () => {
+    // const listbuy = {...selectedProduct, count, total, nameSize};
+    // dispatch(addToSelectedItems(listbuy));
+    navigation.navigate("Pay")
+    console.log(listbuy);
+  }
+
   const handleHeart = () => {
     setIsHeart(!isHeart);
   };
@@ -140,7 +148,7 @@ const ProductList = () => {
 
   useEffect(() => {
     if (selectedProduct) {
-      setTotal(selectedProduct.price * count + isSize);
+      setTotal(selectedProduct.price * count + isSize * count);
     }
   }, [selectedProduct, count, isSize]);
 
@@ -295,7 +303,7 @@ const ProductList = () => {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.titleBtn} onPress={AddItemToCart}>
+              <TouchableOpacity style={styles.titleBtn} onPress={BuyNow}>
                 <Text
                   style={{
                     fontSize: 20,

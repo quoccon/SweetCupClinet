@@ -22,16 +22,22 @@ const Cart = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [performActionColor, setPerformActionColor] = useState("lightgray");
   const dispatch = useDispatch();
-  console.log(selectedItems);
 
   const toggleItemSelection = (itemId) => {
-    const updatedSelectedItems = selectedItems.includes(itemId)
-      ? selectedItems.filter((id) => id !== itemId)
-      : [...selectedItems, itemId];
+    const selectedItem = cartData.find(item => item._id === itemId);
+
+    let updatedSelectedItems;
+
+    if (selectedItems.includes(selectedItem)) {
+      updatedSelectedItems = selectedItems.filter(item => item !== selectedItem);
+    } else {
+      updatedSelectedItems = [...selectedItems, selectedItem];
+    }
+
     setSelectedItems(updatedSelectedItems);
 
     const newTotalCost = cartData.reduce((total, item) => {
-      if (updatedSelectedItems.includes(item._id)) {
+      if (updatedSelectedItems.includes(item)) {
         return total + item.total;
       }
       return total;
@@ -46,13 +52,13 @@ const Cart = () => {
     }
 
     dispatch(addToSelectedItems(updatedSelectedItems));
-    console.log(updatedSelectedItems);
+    console.log(updatedSelectedItems ,"quoc");
   };
 
   useEffect(() => {
     // Calculate the initial total cost when the component mounts
     const initialTotalCost = cartData.reduce((total, item) => {
-      if (selectedItems.includes(item._id)) {
+      if (selectedItems.includes(item)) {
         return total + item.total;
       }
       return total;
@@ -64,7 +70,7 @@ const Cart = () => {
     <SafeAreaView style={styles.container}>
       <View>
         <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+          <Ionicons name="arrow-back" size={30} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Your Cart</Text>
       </View>
@@ -77,27 +83,27 @@ const Cart = () => {
             onPress={() => toggleItemSelection(item._id)}
           >
             <View style={styles.checkbox}>
-              {selectedItems.includes(item._id) && (
+              {selectedItems.includes(item) && (
                 <Ionicons name="checkbox" size={24} color="black" />
               )}
             </View>
             <Image source={{ uri: item.image }} style={styles.image} />
-            <View key={selectedItems._id} style={{ justifyContent: 'center', marginLeft: 10 }}>
-              <Text>{item.nameproduct}</Text>
-              <Text>Total: ${item.total.toFixed(2)}</Text>
-              <Text>Count: {item.count}</Text>
-              <Text>Size: {item.nameSize}</Text>
+            <View key={item._id} style={styles.itemDetails}>
+              <Text style={styles.itemName}>{item.nameproduct}</Text>
+              <Text style={styles.itemTotal}>Total: ${item.total + " vnđ"}</Text>
+              <Text style={styles.itemCount}>Count: {item.count}</Text>
+              <Text style={styles.itemSize}>Size: {item.nameSize}</Text>
             </View>
           </TouchableOpacity>
         )}
       />
       {selectedItems.length > 0 && (
-        <Text>Tổng tiền: {totalCost +" vnđ"} </Text>
+        <Text style={styles.totalText}>Tổng tiền: {totalCost +" vnđ"} </Text>
       )}
       <TouchableOpacity
         style={[styles.actionButton, { backgroundColor: performActionColor }]}
         onPress={() => {
-          navigation.navigate("Pay",{selectedItems:cartData})
+          navigation.navigate("Pay", { selectedItems: selectedItems });
           // Thực hiện hành động của bạn ở đây (ví dụ: xóa các mục đã chọn)
           console.log("Các Mục Đã Chọn:" , selectedItems);
         }}
@@ -110,8 +116,8 @@ const Cart = () => {
 
 const styles = StyleSheet.create({
   title: {
-    color: "#ff0000",
-    fontSize: 20,
+    color: "red",
+    fontSize: 30,
     fontWeight: "700",
     textAlign: "center",
     marginBottom: 10,
@@ -137,6 +143,30 @@ const styles = StyleSheet.create({
   checkbox: {
     marginRight: 10,
   },
+  itemDetails: {
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  itemName: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  itemTotal: {
+    fontSize: 16,
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  itemCount: {
+    fontSize: 16,
+  },
+  itemSize: {
+    fontSize: 16,
+  },
+  totalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
   actionButton: {
     backgroundColor: "lightgray",
     borderRadius: 10,
@@ -145,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  actionButtonText: {
+  actionButtonText: { 
     color: "white",
   },
 });
