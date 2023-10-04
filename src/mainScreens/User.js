@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, StatusBar, StyleSheet,
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { logout } from "../../api/redux";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function User({ navigation }) {
   const dispatch = useDispatch();
@@ -45,8 +46,8 @@ export default function User({ navigation }) {
           <Text style={styles.menuText}>Address</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="wallet" size={45} color="black" />
-          <Text style={styles.menuText}>Payment</Text>
+        <MaterialCommunityIcons name="crown-circle" size={45} color="black" />
+          <Text style={styles.menuText}>Member</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
           <Ionicons name="heart" size={45} color="black" />
