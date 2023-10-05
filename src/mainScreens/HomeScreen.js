@@ -17,15 +17,15 @@ import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 
 import { RefreshControl } from "react-native";
-<<<<<<< HEAD
 
-import { useSelector } from "react-redux";
-=======
 
 import { useSelector } from "react-redux";
 
 
->>>>>>> 3108ffde83d8a5418257dc8e3b4b920e2f57ada1
+
+
+
+
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 

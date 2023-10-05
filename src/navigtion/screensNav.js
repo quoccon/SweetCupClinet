@@ -16,6 +16,9 @@ import Pay from "../component/Home/Pay";
 import AddBank from "../component/Wallet/AddBank";
 import DepositSuccessful from "../component/Wallet/DepositSuccessful";
 import DepositFailed from "../component/Wallet/DepositFailed";
+import Member from "../component/User/Member";
+import MyWishlist from "../component/User/MyWishlist";
+import AboutCompany from "../component/User/AboutCompany";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +41,10 @@ function MyStack() {
       <Stack.Screen name="AddBank" component={AddBank}/>
       <Stack.Screen name="DepositSuccessful" component={DepositSuccessful}/>
       <Stack.Screen name="DepositFailed" component={DepositFailed}/>
+      <Stack.Screen name="Member"  component={Member}/>
+      <Stack.Screen name="MyWishlist" component={MyWishlist}/>
+      <Stack.Screen name="AboutCompany" component={AboutCompany}/>
+
     </Stack.Navigator>
   );
 }

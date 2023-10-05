@@ -45,19 +45,19 @@ export default function User({ navigation }) {
           <Ionicons name="map" size={45} color="black" />
           <Text style={styles.menuText}>Address</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Member')} style={styles.menuItem}>
         <MaterialCommunityIcons name="crown-circle" size={45} color="black" />
           <Text style={styles.menuText}>Member</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity onPress={()=>navigation.navigate('MyWishlist')} style={styles.menuItem}>
           <Ionicons name="heart" size={45} color="black" />
           <Text style={styles.menuText}>My Wishlist</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity onPress={()=>navigation.navigate('AboutCompany')} style={styles.menuItem}>
           <Ionicons name="information-circle-outline" size={45} color="black" />
           <Text style={styles.menuText}>About Company</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} onPress={() => signOut()}>
+        <TouchableOpacity  style={styles.menuItem} onPress={() => signOut()}>
           <Ionicons name="log-out" size={45} color="black" />
           <Text style={styles.menuText}>Sign Out</Text>
         </TouchableOpacity>
