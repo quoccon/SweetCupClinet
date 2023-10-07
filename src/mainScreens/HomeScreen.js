@@ -16,11 +16,22 @@ import ProductList from "../component/Home/ProductList";
 import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import { RefreshControl } from "react-native";
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
+=======
+
+>>>>>>> 4c687e79ea5a2ce705f6eda0bf5993a7001871eb
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 4c687e79ea5a2ce705f6eda0bf5993a7001871eb
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
