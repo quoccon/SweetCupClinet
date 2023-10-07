@@ -16,6 +16,7 @@ import Pay from "../component/Home/Pay";
 import AddBank from "../component/Wallet/AddBank";
 import DepositSuccessful from "../component/Wallet/DepositSuccessful";
 import DepositFailed from "../component/Wallet/DepositFailed";
+import PaySuccful from "../component/Home/PaySuccful";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,7 @@ function MyStack() {
       <Stack.Screen name="AddBank" component={AddBank}/>
       <Stack.Screen name="DepositSuccessful" component={DepositSuccessful}/>
       <Stack.Screen name="DepositFailed" component={DepositFailed}/>
+      <Stack.Screen name="PaySuccful" component={PaySuccful}/>
     </Stack.Navigator>
   );
 }
