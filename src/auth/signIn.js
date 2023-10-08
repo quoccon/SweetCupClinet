@@ -48,6 +48,7 @@ export default function SignIn({ navigation }) {
           AsyncStorage.removeItem("userData");
         }
         navigation.navigate("HomeScreen");
+        
       } else {
         console.log("Đăng nhập không thành công: " + response.data.status);
       }

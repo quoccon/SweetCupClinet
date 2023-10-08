@@ -39,7 +39,8 @@ const ProductList = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-
+  const auth = useSelector((state) => state.auth);
+    const [wishlistdata,setwishlistdata] = useState([])
   const ListData = async () => {
     try {
       const res = await api.get("/product");
@@ -131,8 +132,13 @@ const ProductList = () => {
     console.log(listbuy);
   }
 
-  const handleHeart = () => {
+  const handleHeart = (idWishList) => {
     setIsHeart(!isHeart);
+    console.log(idWishList)
+   
+    const wishlist = {_id : auth.id , wishlist:{ idProduct: idWishList}}
+    setwishlistdata(wishlist)
+    console.log(wishlistdata)
   };
 
   const toggleDescription = () => {
@@ -224,7 +230,7 @@ const ProductList = () => {
                       name="heart"
                       size={40}
                       color={isHeart ? "black" : "#DC143C"}
-                      onPress={handleHeart}
+                      onPress={ ()=>{handleHeart(selectedProduct._id)}}
                     />
                   </View>
                 </View>
