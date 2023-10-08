@@ -60,7 +60,7 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    setnameSize("M");
+    setnameSize("Vừa");
     setIsSize(0);
     setBtn1(true);
     setBtn2(false);
@@ -72,7 +72,7 @@ const ProductList = () => {
     setShortDescription(product.description.slice(0, 100));
     setDescriptionButtonText("Xem thêm");
     setDescriptionExpanded(false);
-    setnameSize("M");
+    setnameSize("Vừa");
     setIsSize(0);
     setBtn1(true);
     setBtn2(false);
@@ -85,14 +85,14 @@ const ProductList = () => {
   };
 
   const handleButton1Press = () => {
-    setnameSize("M");
+    setnameSize("Vừa");
     setIsSize(0);
     setBtn1(true);
     setBtn2(false);
   };
 
   const handleButton2Press = () => {
-    setnameSize("L");
+    setnameSize("Lớn");
     setIsSize(5000);
     setBtn2(true);
     setBtn1(false);
@@ -158,6 +158,9 @@ const ProductList = () => {
     }
   }, [selectedProduct, count, isSize]);
 
+  const formatMoney = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
   return (
     <ScrollView style={styles.container}
     scrollEventThrottle={1}>
@@ -176,7 +179,7 @@ const ProductList = () => {
             />
             <View style={{ marginTop: 10, marginLeft: 10 }}>
               <Text style={styles.titleName}>Name: {item.nameproduct}</Text>
-              <Text style={styles.titlePrice}>Price: {item.price} vnđ</Text>
+              <Text style={styles.titlePrice}>Price: {formatMoney(item.price)}đ</Text>
             </View>
             
           </View>
@@ -220,7 +223,7 @@ const ProductList = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    {selectedProduct.price} vnđ
+                    {formatMoney(selectedProduct.price)}đ
                   </Text>
                   </View>
 
@@ -270,7 +273,7 @@ const ProductList = () => {
                 ]}
                 onPress={handleButton1Press}
               >
-                <Text>M</Text>
+                <Text>Vừa</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[
@@ -279,7 +282,7 @@ const ProductList = () => {
                 ]}
                 onPress={handleButton2Press}
               >
-                <Text>L</Text>
+                <Text>Lớn</Text>
               </TouchableOpacity>
             </View>
 
@@ -320,7 +323,7 @@ const ProductList = () => {
                   }}
                   
                 >
-                  Buy Now . {total} vnđ
+                  Buy Now . {formatMoney(total)}đ
                 </Text>
               </TouchableOpacity>
             </View>

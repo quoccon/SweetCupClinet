@@ -15,17 +15,23 @@ import { Ionicons } from "@expo/vector-icons";
 import ProductList from "../component/Home/ProductList";
 import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
-
 import { RefreshControl } from "react-native";
-
-
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+=======
+
+>>>>>>> 4c687e79ea5a2ce705f6eda0bf5993a7001871eb
+
+
+
+<<<<<<< HEAD
+=======
 
 
 
 
-
-
+>>>>>>> 4c687e79ea5a2ce705f6eda0bf5993a7001871eb
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
@@ -39,7 +45,7 @@ const HomeScreen = () => {
   const [imgActive, setImgActive] = useState(0);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
   const auth = useSelector((state) => state.auth);
-  const scrollInterval = 3000;
+  const scrollInterval = 1000;
   const flatListRef = useRef(null);
 
 
@@ -85,6 +91,7 @@ const HomeScreen = () => {
             onMomentumScrollEnd={({ nativeEvent }) => onChange(nativeEvent)}
             renderItem={({ item }) => (
               <ImageBackground
+              
                 resizeMode="stretch"
                 style={styles.image}
                 source={{ uri: item }}

@@ -7,6 +7,7 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
@@ -17,11 +18,13 @@ import { addToSelectedItems } from "../../../api/redux";
 const Cart = () => {
   const navigation = useNavigation();
   const carts = useSelector((state) => state.cart);
-  const [cartData, setcartData] = useState(carts.cart);
+  const [cartData, setCartData] = useState(carts.cart);
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [performActionColor, setPerformActionColor] = useState("lightgray");
+  const [isLoading, setIsLoading] = useState(false); // State to manage loading screen
   const dispatch = useDispatch();
+  const [isPayment, setisPayment] = useState(false); // State to manage payment screen
 
   const toggleItemSelection = (itemId) => {
     const selectedItem = cartData.find(item => item._id === itemId);
@@ -35,7 +38,7 @@ const Cart = () => {
     }
 
     setSelectedItems(updatedSelectedItems);
-
+    setisPayment(updatedSelectedItems.length > 0);
     const newTotalCost = cartData.reduce((total, item) => {
       if (updatedSelectedItems.includes(item)) {
         return total + item.total;
@@ -44,15 +47,15 @@ const Cart = () => {
     }, 0);
     setTotalCost(newTotalCost);
 
-    // Cập nhật màu cho nút "Perform Action" dựa trên trạng thái của các mục đã chọn
+    // Update the color for the "Perform Action" button based on the selected items
     if (updatedSelectedItems.length > 0) {
-      setPerformActionColor("#ff0000"); // Đổi thành màu đỏ nếu có ít nhất một mục đã chọn
+      setPerformActionColor("#ff0000"); // Change to red if at least one item is selected
     } else {
-      setPerformActionColor("lightgray"); // Màu lightgray nếu không có mục nào đã chọn
+      setPerformActionColor("lightgray"); // Light gray if no item is selected
     }
 
     dispatch(addToSelectedItems(updatedSelectedItems));
-    console.log(updatedSelectedItems ,"quoc");
+    console.log(updatedSelectedItems, "quoc");
   };
 
   useEffect(() => {
@@ -66,6 +69,9 @@ const Cart = () => {
     setTotalCost(initialTotalCost);
   }, [cartData, selectedItems]);
 
+  const formatMoney = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -89,27 +95,42 @@ const Cart = () => {
             </View>
             <Image source={{ uri: item.image }} style={styles.image} />
             <View key={item._id} style={styles.itemDetails}>
-              <Text style={styles.itemName}>{item.nameproduct}</Text>
-              <Text style={styles.itemTotal}>Total: ${item.total + " vnđ"}</Text>
-              <Text style={styles.itemCount}>Count: {item.count}</Text>
-              <Text style={styles.itemSize}>Size: {item.nameSize}</Text>
+              <View style={{flexDirection:'row',alignItems:'center'}}>
+                <Text style={styles.itemCount}>x{item.count} </Text>
+                <Text style={styles.itemName}>{item.nameproduct}</Text>
+              </View>
+              <Text style={styles.itemTotal}>{formatMoney(item.total) + "đ"}</Text>
+
+              <Text style={styles.itemSize}>{item.nameSize}</Text>
             </View>
           </TouchableOpacity>
         )}
       />
       {selectedItems.length > 0 && (
-        <Text style={styles.totalText}>Tổng tiền: {totalCost +" vnđ"} </Text>
+        <Text style={styles.totalText}>Tổng tiền: {formatMoney(totalCost) +'đ'} </Text>
       )}
       <TouchableOpacity
-        style={[styles.actionButton, { backgroundColor: performActionColor }]}
+        style={[styles.actionButton, { backgroundColor: isPayment ? performActionColor :'lightgray' }]}
         onPress={() => {
-          navigation.navigate("Pay", { selectedItems: selectedItems });
-          // Thực hiện hành động của bạn ở đây (ví dụ: xóa các mục đã chọn)
-          console.log("Các Mục Đã Chọn:" , selectedItems);
+          if(isPayment){
+          setIsLoading(true); // Show loading screen
+
+          setTimeout(() => {
+            navigation.navigate("Pay", { selectedItems: selectedItems });
+            setIsLoading(false); // Hide loading screen after 2 seconds
+          }, 2000); // 2 seconds timeout
         }}
+      }
       >
         <Text style={styles.actionButtonText}>Thanh toán</Text>
       </TouchableOpacity>
+
+      {/* Loading screen */}
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="white" />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -124,9 +145,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
   },
   itemContainer: {
     borderRadius: 10,
@@ -134,6 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
+    
   },
   image: {
     width: 100,
@@ -145,7 +167,8 @@ const styles = StyleSheet.create({
   },
   itemDetails: {
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 30,
+    
   },
   itemName: {
     fontSize: 20,
@@ -157,7 +180,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   itemCount: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: '500',
   },
   itemSize: {
     fontSize: 16,
@@ -175,8 +199,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  actionButtonText: { 
+  actionButtonText: {
     color: "white",
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
