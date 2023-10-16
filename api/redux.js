@@ -10,6 +10,7 @@ export const authSlice = createSlice({
     token: "",
     id: "",
     balance: "",
+    wishList: [],
     isLogin: false,
   },
   reducers: {
@@ -22,6 +23,7 @@ export const authSlice = createSlice({
       state.token = accessToken;
       state.id = info_user._id;
       state.balance = info_user.balance
+      state.wishList = info_user.wishList
       state.isLogin = true;
     },
     logout: (state, action) => {
@@ -35,7 +37,21 @@ export const authSlice = createSlice({
     },
   },
 });
+export const wishListSlice = createSlice({
+  name: "wishList",
+  initialState: {
+    wishList: [],
 
+  },
+  reducers: {
+    addWishList: (state, action) => {
+      const itemInWishList = state.wishList.findIndex((item) => item._id === action.payload._id)
+      if (itemInWishList) {
+        
+      }
+    }
+  }
+})
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {

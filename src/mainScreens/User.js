@@ -9,6 +9,9 @@ export default function User({ navigation }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   console.log(auth);
+  const wishlist = auth.wishList;
+  console.log(wishlist);
+  
   const signOut = () => {
     dispatch(logout());
     navigation.navigate('SignIn');

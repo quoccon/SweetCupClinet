@@ -16,10 +16,20 @@ import Pay from "../component/Home/Pay";
 import AddBank from "../component/Wallet/AddBank";
 import DepositSuccessful from "../component/Wallet/DepositSuccessful";
 import DepositFailed from "../component/Wallet/DepositFailed";
+
 import PaySuccful from "../component/Home/PaySuccful";
 import Member from "../component/User/Member";
 import MyWishlist from "../component/User/MyWishlist";
 import AboutCompany from "../component/User/AboutCompany";
+
+
+
+
+// import Member from "../component/User/Member";
+// import MyWishlist from "../component/User/MyWishlist";
+// import AboutCompany from "../component/User/AboutCompany";
+
+
 
 const Stack = createStackNavigator();
 
@@ -44,6 +54,8 @@ function MyStack() {
       <Stack.Screen name="DepositFailed" component={DepositFailed}/>
 
       <Stack.Screen name="PaySuccful" component={PaySuccful}/>
+
+
       <Stack.Screen name="Member"  component={Member}/>
       <Stack.Screen name="MyWishlist" component={MyWishlist}/>
       <Stack.Screen name="AboutCompany" component={AboutCompany}/>

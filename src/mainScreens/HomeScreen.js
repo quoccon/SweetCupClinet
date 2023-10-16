@@ -21,6 +21,9 @@ import { useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 
 
+
+
+
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
