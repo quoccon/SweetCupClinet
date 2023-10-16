@@ -1,41 +1,49 @@
-import React from "react";
-import { View,TextInput,TouchableOpacity,StyleSheet,Text, SafeAreaView } from "react-native";
-import Ionicons from '@expo/vector-icons' //sử dụng icon từ thư viện
+import React, { useState } from 'react';
+import { View, TextInput, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-const SearchBar = () => {
-    return(
-        <SafeAreaView style={styles.container}>
-            <TextInput style={styles.input} placeholder="Nhập từ khóa tìm kiếm"/>
-        </SafeAreaView>
-    )
-}
+const SearchBar = ({ onSearch }) => {
+  const [searchText, setSearchText] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchText);
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Search..."
+        onChangeText={(text) => setSearchText(text)}
+        value={searchText}
+        onSubmitEditing={handleSearch}
+      />
+      <Ionicons
+        name="search"
+        size={24}
+        color="#ff0000"
+        onPress={handleSearch}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container:{
-        flexDirection:'row',
-        alignItems:'center',
-        backgroundColor:'#F0F0F0',
-        borderRadius:10,
-        paddingHorizontal:10,
-        marginHorizontal:10,
-        marginTop:10
-    },
-    input: {
-        flex: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        borderWidth:1,
-        borderRadius:10,
-        marginRight:20,
-        marginLeft:20
-      },
-      searchButton: {
-        backgroundColor: 'blue',
-        padding: 10,
-        borderRadius: 10,
-        marginLeft: 5,
-      },
-
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    marginHorizontal: 30,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+    marginRight: 10,
+  },
 });
 
 export default SearchBar;

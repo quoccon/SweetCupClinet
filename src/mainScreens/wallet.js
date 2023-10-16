@@ -44,6 +44,10 @@ export default function Wallet({ navigation }) {
     return acc;
   }, {});
 
+  const formatMoney = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -53,7 +57,7 @@ export default function Wallet({ navigation }) {
         <Text style={styles.balanceText}>Balance</Text>
         <View style={styles.balanceInfo}>
           <View style={styles.balanceDetails}>
-            <Text style={styles.balanceAmount}>$ {auth.balance}</Text>
+            <Text style={styles.balanceAmount}>{formatMoney(auth.balance)}đ</Text>
             <Text style={styles.balanceName}>Name</Text>
           </View>
           <TouchableOpacity
