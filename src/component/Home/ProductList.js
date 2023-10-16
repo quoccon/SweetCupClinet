@@ -133,9 +133,10 @@ const ProductList = () => {
   }
 
   const handleHeart = async () => {
-    setIsHeart(!isHeart);
+   
 
     try {
+      setIsHeart(!isHeart);
       const wishlist = await api.post('/addwishlist',selectedProduct);
 
       Alert.alert("Successful addwishlist")
