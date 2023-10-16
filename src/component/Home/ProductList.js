@@ -18,10 +18,11 @@ import { addToCart } from "../../../api/redux";
 import api from "../../../api/axios";
 import { addToSelectedItems } from "../../../api/redux";
 
+
 const ProductList = () => {
   const [productData, setProductData] = useState([]);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [btn1, setBtn1] = useState(false);
   const [btn2, setBtn2] = useState(false);
   const [count, setCount] = useState(1);
@@ -36,10 +37,12 @@ const ProductList = () => {
   );
   const [nameSize, setnameSize] = useState("");
   const [keyy, setkeyy] = useState("");
+  const [listHeart, setlistHeart] = useState([])
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
 
   const ListData = async () => {
     try {
@@ -77,10 +80,20 @@ const ProductList = () => {
     setBtn1(true);
     setBtn2(false);
     setCount(1);
+    // setIsHeart(true)
+    // const wishlistProduct = listHeart.filter(item => item.prodctID === selectedProduct._id)
+    // const isProductInWishlist = wishlistProduct.includes(selectedProduct._id)
+    // console.log(isProductInWishlist);
+    // console.log(wishlistProduct);
+    // setIsHeart(isProductInWishlist);
+    if (listHeart._id === selectedProduct._id){
+      console.log("oke");
+      console.log(listHeart._id);
+    }
   };
 
   const closeDialog = () => {
-    setSelectedProduct(null);
+    setSelectedProduct("");
     setIsDialogVisible(false);
   };
 
@@ -132,18 +145,15 @@ const ProductList = () => {
     console.log(listbuy);
   }
 
-  const handleHeart = async () => {
-   
+  const handleHeart = async (idpr) => {
+    console.log(idpr);
+    const productId = { prodctID: idpr, _id: auth.id };
 
     try {
       setIsHeart(!isHeart);
-      const wishlist = await api.post('/addwishlist',selectedProduct);
-
-      Alert.alert("Successful addwishlist")
-      console.log("wishlist added");
+      const wishlist = await api.post('/addwishlist', productId);
       console.log(wishlist);
-      console.log(selectedProduct);
-        
+
 
 
     } catch (error) {
@@ -152,6 +162,23 @@ const ProductList = () => {
     }
 
   };
+
+
+
+  const getWishlist = async () => {
+    const res = await api.get("/getwishlist?_id=" + auth.id);
+    console.log(res.data);
+    setlistHeart(res.data);
+
+  }
+
+  // const fetchData = async () => {
+  //   const wishlistData = await getWishlist();
+  //   if (wishlistData) setdataWlist(wishlistData);
+  // console.log(dataWlist)}
+
+  useEffect(() => { getWishlist() }, [])
+
 
   const toggleDescription = () => {
     if (descriptionExpanded) {
@@ -198,22 +225,22 @@ const ProductList = () => {
         </TouchableOpacity>
       ))}
 
-      
+
 
       {selectedProduct && (
 
         <ScrollView>
           <Modal visible={isDialogVisible} animationType="slide" >
-           <View style={{flexDirection:'row',alignItems:'center',marginBottom:10}}>
-            <Ionicons
-              name="close-circle-outline"
-              size={24}
-              color="black"
-              onPress={closeDialog}
-              style={{ marginLeft: 10, marginTop: 40 }}
-            />
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+              <Ionicons
+                name="close-circle-outline"
+                size={24}
+                color="black"
+                onPress={closeDialog}
+                style={{ marginLeft: 10, marginTop: 40 }}
+              />
 
-            <Text style={{fontSize:26,marginTop:40,fontWeight:'700',marginLeft:140}}>Information products</Text>
+              <Text style={{ fontSize: 26, marginTop: 40, fontWeight: '700', marginLeft: 140 }}>Information products</Text>
             </View>
             <View style={{ flex: 1 }}>
               <Image
@@ -252,9 +279,11 @@ const ProductList = () => {
                       <Ionicons
                         name="heart"
                         size={40}
-                        color={isHeart ? "black" : "#DC143C"}
-                        onPress={handleHeart}
+                        color={isHeart ? "#DC143C" : "black"}
+                        onPress={() => handleHeart(selectedProduct._id)}
                       />
+
+
                     </View>
                   </View>
 

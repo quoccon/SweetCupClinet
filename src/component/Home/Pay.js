@@ -55,6 +55,7 @@ import api from "../../../api/axios";
     console.log(totalPayment);
     if (selectedPay === "SweetCup wallet"){
       try {
+        setIsProcessing(true); // Hiển thị tiến trình
         const paymoney = {balance:totalPayment,_id:auth.id};
         const pay = await api.post("/pay", paymoney);
         const currentBalance = auth.balance;
@@ -74,7 +75,7 @@ import api from "../../../api/axios";
         console.log("Lỗi");
       }
     }
-    setIsProcessing(true); // Hiển thị tiến trình
+   
     
     setTimeout(() => {
       // selectedItems.forEach((item) => {

@@ -13,11 +13,14 @@ const Header = () => {
         <View style={styles.container}>
             <View style={styles.leftSection}>
                 <Image source={require("../../../public/sweetcup.jpg")} style={styles.logo} />
-                <Text style={styles.text}>Hello, {auth.username} </Text>
+                <View>
+                    <Text style={styles.text}>Hello, </Text>
+                    <Text style={styles.nameU}>{auth.username}</Text>
+                </View>
             </View>
             <View style={styles.rightSection}>
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate("Search")}>
-                <Ionicons name="ios-search-outline" size={30} color="black" />
+                    <Ionicons name="ios-search-outline" size={30} color="black" />
 
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { navigation.navigate('Cart') }} style={styles.iconButton}>
@@ -35,14 +38,14 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
+        // marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 10,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
-        elevation: 3, // Đổ bóng cho header
+        elevation: 10, // Đổ bóng cho header
     },
     leftSection: {
         flexDirection: 'row',
@@ -58,8 +61,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     text: {
-        fontSize: 16,
-        fontWeight: '700',
+        fontSize: 14,
+        fontWeight: '400',
     },
     iconButton: {
         marginLeft: 10,
@@ -78,6 +81,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 12,
     },
+    nameU:{
+        fontSize:16,
+        fontWeight: 'bold',
+    }
 })
 
 export default Header;
