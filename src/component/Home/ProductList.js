@@ -198,7 +198,7 @@ const ProductList = () => {
         </TouchableOpacity>
       ))}
 
-      //Modal dialog
+      
 
       {selectedProduct && (
 
