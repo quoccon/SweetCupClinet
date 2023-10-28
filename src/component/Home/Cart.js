@@ -106,6 +106,7 @@ const Cart = () => {
           </TouchableOpacity>
         )}
       />
+      
       {selectedItems.length > 0 && (
         <Text style={styles.totalText}>Tổng tiền: {formatMoney(totalCost) +'đ'} </Text>
       )}

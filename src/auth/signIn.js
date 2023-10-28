@@ -39,14 +39,19 @@ export default function SignIn({ navigation }) {
     const userData = { username: userName, passwd: password };
     try {
       const response = await api.post("/login", userData);
-
+      
       if (response.data.status === 0) {
-        dispatch(login(response.data));
+        
         if (isRememberU) {
+          
           AsyncStorage.setItem("userData", JSON.stringify(userData));
+          
         } else {
           AsyncStorage.removeItem("userData");
         }
+        
+        dispatch(login(response.data));
+        console.log("Ngon")
         navigation.navigate("HomeScreen");
         
       } else {
@@ -114,7 +119,7 @@ export default function SignIn({ navigation }) {
               <Text style={styles.signInText}>Sign In</Text>
             </TouchableOpacity>
             <Text style={styles.signUpText}>
-              Don't have an account?{" "}
+             <Text> Don't have an account?{" "}</Text>
               <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
                 <Text style={styles.signUpLink}>Sign Up</Text>
               </TouchableOpacity>

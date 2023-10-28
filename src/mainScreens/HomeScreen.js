@@ -17,6 +17,7 @@ import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import { RefreshControl } from "react-native";
 
+
 import { useSelector } from "react-redux";
 
 
@@ -34,7 +35,7 @@ const HomeScreen = () => {
   const [imgActive, setImgActive] = useState(0);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
   const auth = useSelector((state) => state.auth);
-  const scrollInterval = 1000;
+  const scrollInterval = 2000;
   const flatListRef = useRef(null);
 
 
@@ -103,7 +104,7 @@ const HomeScreen = () => {
           ))}
         </View>
 
-        <View style={styles.searchContainer}>
+        {/* <View style={styles.searchContainer}>
           <TextInput
             placeholder="Search here ..."
             style={styles.searchWrapper}
@@ -117,7 +118,7 @@ const HomeScreen = () => {
               style={{ paddingRight: 20 }}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View style={{ marginTop: 20 }}>
           <Category />
         </View>

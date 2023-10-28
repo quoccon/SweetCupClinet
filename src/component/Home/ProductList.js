@@ -9,6 +9,7 @@ import {
   RefreshControl,
   ScrollView,
   StatusBar,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -17,10 +18,11 @@ import { addToCart } from "../../../api/redux";
 import api from "../../../api/axios";
 import { addToSelectedItems } from "../../../api/redux";
 
+
 const ProductList = () => {
   const [productData, setProductData] = useState([]);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [btn1, setBtn1] = useState(false);
   const [btn2, setBtn2] = useState(false);
   const [count, setCount] = useState(1);
@@ -34,13 +36,14 @@ const ProductList = () => {
     "Xem thêm"
   );
   const [nameSize, setnameSize] = useState("");
-  const [keyy, setkeyy] = useState(""); 
+  const [keyy, setkeyy] = useState("");
+  const [listHeart, setlistHeart] = useState([])
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
-    const [wishlistdata,setwishlistdata] = useState([])
+
   const ListData = async () => {
     try {
       const res = await api.get("/product");
@@ -64,7 +67,7 @@ const ProductList = () => {
     setIsSize(0);
     setBtn1(true);
     setBtn2(false);
-  },[]);
+  }, []);
 
   const showDialog = (product) => {
     setSelectedProduct(product);
@@ -77,10 +80,20 @@ const ProductList = () => {
     setBtn1(true);
     setBtn2(false);
     setCount(1);
+    // setIsHeart(true)
+    // const wishlistProduct = listHeart.filter(item => item.prodctID === selectedProduct._id)
+    // const isProductInWishlist = wishlistProduct.includes(selectedProduct._id)
+    // console.log(isProductInWishlist);
+    // console.log(wishlistProduct);
+    // setIsHeart(isProductInWishlist);
+    if (listHeart._id === selectedProduct._id){
+      console.log("oke");
+      console.log(listHeart._id);
+    }
   };
 
   const closeDialog = () => {
-    setSelectedProduct(null);
+    setSelectedProduct("");
     setIsDialogVisible(false);
   };
 
@@ -119,7 +132,7 @@ const ProductList = () => {
   const AddItemToCart = () => {
     setkeyy(selectedProduct._id)
     if (selectedProduct) {
-      const listdatacart = { ...selectedProduct, count, total,nameSize,keyy };
+      const listdatacart = { ...selectedProduct, count, total, nameSize, keyy };
       dispatch(addToCart(listdatacart));
       setCount(1)
     }
@@ -132,14 +145,40 @@ const ProductList = () => {
     console.log(listbuy);
   }
 
-  const handleHeart = (idWishList) => {
-    setIsHeart(!isHeart);
-    console.log(idWishList)
-   
-    const wishlist = {_id : auth.id , wishlist:{ idProduct: idWishList}}
-    setwishlistdata(wishlist)
-    console.log(wishlistdata)
+  const handleHeart = async (idpr) => {
+    console.log(idpr);
+    const productId = { prodctID: idpr, _id: auth.id };
+
+    try {
+      setIsHeart(!isHeart);
+      const wishlist = await api.post('/addwishlist', productId);
+      console.log(wishlist);
+
+
+
+    } catch (error) {
+      console.log(error);
+      console.log("Lỗi");
+    }
+
   };
+
+
+
+  const getWishlist = async () => {
+    const res = await api.get("/getwishlist?_id=" + auth.id);
+    console.log(res.data);
+    setlistHeart(res.data);
+
+  }
+
+  // const fetchData = async () => {
+  //   const wishlistData = await getWishlist();
+  //   if (wishlistData) setdataWlist(wishlistData);
+  // console.log(dataWlist)}
+
+  useEffect(() => { getWishlist() }, [])
+
 
   const toggleDescription = () => {
     if (descriptionExpanded) {
@@ -163,10 +202,10 @@ const ProductList = () => {
   }
   return (
     <ScrollView style={styles.container}
-    scrollEventThrottle={1}>
+      scrollEventThrottle={1}>
       <Text style={styles.title}>Product</Text>
 
-      
+
 
       {productData.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => showDialog(item)}>
@@ -181,176 +220,189 @@ const ProductList = () => {
               <Text style={styles.titleName}>Name: {item.nameproduct}</Text>
               <Text style={styles.titlePrice}>Price: {formatMoney(item.price)}đ</Text>
             </View>
-            
+
           </View>
         </TouchableOpacity>
       ))}
 
+
+
       {selectedProduct && (
-        <Modal visible={isDialogVisible} animationType="slide" >
-          <Ionicons
-            name="close-circle-outline"
-            size={24}
-            color="black"
-            onPress={closeDialog}
-            style={{ marginLeft: 10, marginTop:40 }}
-          />
-          <View style={{ flex: 1 }}>
-            <Image
-              source={{ uri: selectedProduct.image }}
-              style={{ width: "100%", height: "50%", borderRadius: 10 }}
-            />
-            <View
-              style={{
-                marginTop: 10,
-                marginLeft: 30,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginRight: 60,
-              }}
-            >
-              <View>
-                <View style={{ flexDirection:'row', justifyContent:'space-between' }}>
-                  <View>
-                  <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-                    {selectedProduct.nameproduct}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "#ff0000",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {formatMoney(selectedProduct.price)}đ
-                  </Text>
+
+        <ScrollView>
+          <Modal visible={isDialogVisible} animationType="slide" >
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+              <Ionicons
+                name="close-circle-outline"
+                size={24}
+                color="black"
+                onPress={closeDialog}
+                style={{ marginLeft: 10, marginTop: 40 }}
+              />
+
+              <Text style={{ fontSize: 26, marginTop: 40, fontWeight: '700', marginLeft: 140 }}>Information products</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Image
+                source={{ uri: selectedProduct.image }}
+                style={{ width: "100%", height: "50%", borderRadius: 10 }}
+              />
+              <View
+                style={{
+                  marginTop: 10,
+                  marginLeft: 30,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginRight: 60,
+                }}
+              >
+                <View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View>
+                      <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+                        {selectedProduct.nameproduct}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          color: "#ff0000",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {formatMoney(selectedProduct.price)}đ
+                      </Text>
+                    </View>
+
+                    <View>
+
+                      <Ionicons
+                        name="heart"
+                        size={40}
+                        color={isHeart ? "#DC143C" : "black"}
+                        onPress={() => handleHeart(selectedProduct._id)}
+                      />
+
+
+                    </View>
                   </View>
 
-                  <View>
 
-                    <Ionicons
-                      name="heart"
-                      size={40}
-                      color={isHeart ? "black" : "#DC143C"}
-                      onPress={ ()=>{handleHeart(selectedProduct._id)}}
-                    />
-                  </View>
+                  <Text style={{ fontSize: 16 }}>
+                    {shortDescription}
+                  </Text>
+                  <TouchableOpacity onPress={toggleDescription}>
+                    <Text style={{ color: "#007BFF" }}>
+                      {descriptionButtonText}
+                    </Text>
+                  </TouchableOpacity>
+
+
                 </View>
 
-
-                <Text style={{ fontSize: 16 }}>
-                  {shortDescription}
-                </Text>
-                <TouchableOpacity onPress={toggleDescription}>
-                  <Text style={{ color: "#007BFF" }}>
-                    {descriptionButtonText}
-                  </Text>
-                </TouchableOpacity>
 
 
               </View>
 
-
-
-            </View>
-
-            <Text
-              style={{
-                fontSize: 20,
-                marginLeft: 30,
-                marginTop: 30,
-                fontWeight: "700",
-              }}
-            >
-              Chọn size:
-            </Text>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-                style={[
-                  styles.Size,
-                  { backgroundColor: btn1 ? "#FF8C00" : "white" },
-                ]}
-                onPress={handleButton1Press}
-              >
-                <Text>Vừa</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.Size,
-                  { backgroundColor: btn2 ? "#FF8C00" : "white" },
-                ]}
-                onPress={handleButton2Press}
-              >
-                <Text>Lớn</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginLeft: 30,
-                marginTop: 50,
-                alignItems: "center",
-              }}
-            >
-              <TouchableOpacity onPress={decrementCount}>
-                <Ionicons
-                  name="caret-back-circle-outline"
-                  size={24}
-                  color="black"
-                  style={{ marginRight: 10 }}
-                />
-              </TouchableOpacity>
-              <Text>{count}</Text>
-              <TouchableOpacity onPress={incrementCount}>
-                <Ionicons
-                  name="caret-forward-circle-outline"
-                  size={24}
-                  color="black"
-                  style={{ marginLeft: 10 }}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.titleBtn} onPress={BuyNow}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    marginTop: 10,
-                    color: "white",
-                  }}
-                  
-                >
-                  Buy Now . {formatMoney(total)}đ
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ alignItems: "center" }}>
-              <TouchableOpacity
-                style={styles.btnAddCart}
-                onPress={() => {
-                  AddItemToCart();
-                  closeDialog();
-                  navigation.navigate("Cart");
+              <Text
+                style={{
+                  fontSize: 20,
+                  marginLeft: 30,
+                  marginTop: 30,
+                  fontWeight: "700",
                 }}
               >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 16,
-                    fontWeight: "bold",
+                Chọn size:
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity
+                  style={[
+                    styles.Size,
+                    { backgroundColor: btn1 ? "#FF8C00" : "white" },
+                  ]}
+                  onPress={handleButton1Press}
+                >
+                  <Text>Vừa</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.Size,
+                    { backgroundColor: btn2 ? "#FF8C00" : "white" },
+                  ]}
+                  onPress={handleButton2Press}
+                >
+                  <Text>Lớn</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 30,
+                  marginTop: 50,
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity onPress={decrementCount}>
+                  <Ionicons
+                    name="caret-back-circle-outline"
+                    size={24}
+                    color="black"
+                    style={{ marginRight: 10 }}
+                  />
+                </TouchableOpacity>
+                <Text>{count}</Text>
+                <TouchableOpacity onPress={incrementCount}>
+                  <Ionicons
+                    name="caret-forward-circle-outline"
+                    size={24}
+                    color="black"
+                    style={{ marginLeft: 10 }}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.titleBtn} onPress={BuyNow}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      marginTop: 10,
+                      color: "white",
+                    }}
+
+                  >
+                    Buy Now . {formatMoney(total)}đ
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ alignItems: "center" }}>
+                <TouchableOpacity
+                  style={styles.btnAddCart}
+                  onPress={() => {
+                    AddItemToCart();
+                    closeDialog();
+                    navigation.navigate("Cart");
                   }}
                 >
-                  Add to cart
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 16,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Add to cart
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
+        </ScrollView>
       )}
+
     </ScrollView>
+
   );
 };
 
