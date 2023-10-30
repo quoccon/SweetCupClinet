@@ -80,16 +80,8 @@ const ProductList = () => {
     setBtn1(true);
     setBtn2(false);
     setCount(1);
-    // setIsHeart(true)
-    // const wishlistProduct = listHeart.filter(item => item.prodctID === selectedProduct._id)
-    // const isProductInWishlist = wishlistProduct.includes(selectedProduct._id)
-    // console.log(isProductInWishlist);
-    // console.log(wishlistProduct);
-    // setIsHeart(isProductInWishlist);
-    if (listHeart._id === selectedProduct._id){
-      console.log("oke");
-      console.log(listHeart._id);
-    }
+
+
   };
 
   const closeDialog = () => {
@@ -160,6 +152,7 @@ const ProductList = () => {
       console.log(error);
       console.log("Lỗi");
     }
+    getWishlist();
 
   };
 
@@ -178,6 +171,17 @@ const ProductList = () => {
   // console.log(dataWlist)}
 
   useEffect(() => { getWishlist() }, [])
+
+  useEffect(() => {
+    const foundProduct = listHeart.find(item => item._id === selectedProduct._id);
+    if (foundProduct) {
+      console.log("oke");
+      console.log(foundProduct._id);
+      setIsHeart(true);
+    } else {
+      setIsHeart(false);
+    }
+  }, [selectedProduct, listHeart]);
 
 
   const toggleDescription = () => {
@@ -209,7 +213,9 @@ const ProductList = () => {
 
       {productData.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => showDialog(item)}>
-          <View style={{ flexDirection: "row", padding: 16, alignItems: "center" }}>
+          <View style={{
+            flexDirection: "row", padding: 16, alignItems: "center",
+          }}>
             <Image
               source={{
                 uri: item.image,
