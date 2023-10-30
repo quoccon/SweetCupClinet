@@ -17,10 +17,8 @@ import Header from "../component/Home/Header";
 import Category from "../component/Home/Category";
 import { RefreshControl } from "react-native";
 
+
 import { useSelector } from "react-redux";
-// import { useSelector } from "react-redux";
-
-
 
 
 
