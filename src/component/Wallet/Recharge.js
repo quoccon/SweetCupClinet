@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   Image,
   SafeAreaView,
@@ -62,6 +63,10 @@ export default function Recharge({ navigation }) {
   };
 
   const recharge = async () => {
+    if(!radioB){
+      Alert.alert("Please choose your bank");
+      return;
+    }
     console.log(Monney + "ss" + auth.id);
     const newBalance = { balance: Monney, _id: auth.id };
     try {

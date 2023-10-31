@@ -31,6 +31,9 @@ const Header = () => {
                         </View>
                     )}
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate("MyWishlist")}>
+                <Ionicons name="heart-outline" size={30} color="black" />
+                </TouchableOpacity>
             </View>
         </View>
     )
