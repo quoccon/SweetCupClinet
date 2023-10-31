@@ -1,18 +1,42 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native";
+import api from "../../../api/axios";
+import { useSelector } from "react-redux";
+const auth = useSelector((state) => state.auth);
 export default function Address({ navigation }) {
   const [radioB, setradioB] = useState("");
+  const [addressData, setaddressData] = useState([])
 
-  var data = [
-    { id: "1", location: "Nhà", adress: "Item 1" },
-    { id: "2", location: "Công ty", adress: "Item 2" },
-    { id: "3", location: "Nhà người yêu", adress: "Item 3" },
-  ];
+  // var data = [
+  //   { id: "1", location: "Nhà", adress: "Item 1" },
+  //   { id: "2", location: "Công ty", adress: "Item 2" },
+  //   { id: "3", location: "Nhà người yêu", adress: "Item 3" },
+  // ];
+
+
+  // const listAdress = async () => {
+
+  //   try {
+  //     const response = await api.get("/address?userId=" +auth.id );
+  //     const addressData = response.data;
+  //     // console.log("Response:"+ JSON.stringify(addressData,null,2));
+  //     setaddressData(addressData)
+  //   } catch (error) {
+  //     console.log("Lỗi" + error);
+  //   }
+  // }
+ 
+
+  // useEffect(() => {
+  //   listAdress();
+  // }, [])
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,27 +48,27 @@ export default function Address({ navigation }) {
         <Text style={styles.headerText}>Address</Text>
       </View>
       <ScrollView>
-      <View style={styles.contentContainer}>
-        
-        {data.map((item,index)=> (
-          <View style={styles.Itemcontainer} key={item.id}>
-          <TouchableOpacity onPress={() => setradioB(item.id)}>
-            <View style={styles.radio}>
-              {radioB == item.id ? (
-                <View style={styles.radioBG}></View>
-              ) : null}
+        <View style={styles.contentContainer}>
+
+          {addressData.map((item, index) => (
+            <View style={styles.Itemcontainer} key={item.id}>
+              <TouchableOpacity onPress={() => setradioB(item.id)}>
+                <View style={styles.radio}>
+                  {radioB == item.id ? (
+                    <View style={styles.radioBG}></View>
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+              <View style={styles.wp_item}>
+                <View>
+                  <Text>{item._id}</Text>
+                  <Text>{item.tag}</Text>
+                </View>
+              </View>
             </View>
-          </TouchableOpacity>
-          <View style={styles.wp_item}>
-            <View>
-              <Text>{item.location}</Text>
-              <Text>{item.adress}</Text>
-            </View>
-          </View>
+          ))}
+
         </View>
-        ))}
-        
-      </View>
       </ScrollView>
       <View style={styles.btnAddAdresContainer}>
         <TouchableOpacity

@@ -83,6 +83,7 @@
               console.log(bill);
             } catch (error) {
               console.log("Lỗi rùi");
+              console.log(error);
             }
           }
 

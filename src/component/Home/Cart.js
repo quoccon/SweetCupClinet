@@ -88,6 +88,7 @@ const Cart = () => {
             style={styles.itemContainer}
             onPress={() => toggleItemSelection(item._id)}
           >
+          
             <View style={styles.checkbox}>
               {selectedItems.includes(item) && (
                 <Ionicons name="checkbox" size={24} color="black" />
