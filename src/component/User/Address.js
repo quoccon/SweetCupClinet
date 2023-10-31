@@ -7,11 +7,11 @@ import { FlatList } from "react-native";
 import { ScrollView } from "react-native";
 import api from "../../../api/axios";
 import { useSelector } from "react-redux";
-const auth = useSelector((state) => state.auth);
+
 export default function Address({ navigation }) {
   const [radioB, setradioB] = useState("");
   const [addressData, setaddressData] = useState([])
-
+  const auth = useSelector((state) => state.auth);
   // var data = [
   //   { id: "1", location: "Nhà", adress: "Item 1" },
   //   { id: "2", location: "Công ty", adress: "Item 2" },
@@ -19,22 +19,24 @@ export default function Address({ navigation }) {
   // ];
 
 
-  // const listAdress = async () => {
+  const listAdress = async () => {
 
-  //   try {
-  //     const response = await api.get("/address?userId=" +auth.id );
-  //     const addressData = response.data;
-  //     // console.log("Response:"+ JSON.stringify(addressData,null,2));
-  //     setaddressData(addressData)
-  //   } catch (error) {
-  //     console.log("Lỗi" + error);
-  //   }
-  // }
+    try {
+      const res = await api.get("/address?userId=" + auth.id);
+      
+      
+      setaddressData(res.data)
+      
+    } catch (error) {
+      console.log("Lỗi" + error);
+    }
+  }
  
 
-  // useEffect(() => {
-  //   listAdress();
-  // }, [])
+  useEffect(() => {
+    listAdress();
+    console.log(addressData)
+  }, [])
 
 
 
@@ -61,8 +63,8 @@ export default function Address({ navigation }) {
               </TouchableOpacity>
               <View style={styles.wp_item}>
                 <View>
-                  <Text>{item._id}</Text>
                   <Text>{item.tag}</Text>
+                  <Text>{item.location}</Text>
                 </View>
               </View>
             </View>
